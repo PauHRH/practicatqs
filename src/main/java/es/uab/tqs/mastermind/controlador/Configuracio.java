@@ -1,4 +1,4 @@
-package es.uab.tqs.mastermind;
+package es.uab.tqs.mastermind.controlador;
 
 public class Configuracio {
     private int longitud;
