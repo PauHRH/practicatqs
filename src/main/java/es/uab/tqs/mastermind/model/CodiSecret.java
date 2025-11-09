@@ -3,7 +3,7 @@ package es.uab.tqs.mastermind.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CodiSecret {
+public class CodiSecret{
 	List<Integer> codi = new ArrayList<>();
 	int longitud;
 	Aleatori aleatori;
@@ -18,12 +18,12 @@ public class CodiSecret {
 
 	}
 	
-	void generarCodi()
+	public void generarCodi()
 	{
 
 	}
 	
-	void setCodi(List<Integer> codi)
+	public void setCodi(List<Integer> codi)
 	{
 
 	}
