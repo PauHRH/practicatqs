@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import es.uab.tqs.mastermind.model.Aleatori;
 import es.uab.tqs.mastermind.model.CodiSecret;
 import es.uab.tqs.mastermind.model.VerificaIntent;
+import es.uab.tqs.mastermind.model.MockAleatoriConfiguracio;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,7 +18,8 @@ class TestVerificaIntent {
 	
 	@BeforeEach
 	void setUp() {
-
+		Aleatori aleatori =  new MockAleatoriConfiguracio();
+		codi = new CodiSecret(aleatori, 4);
 	}
 
 	@Test
