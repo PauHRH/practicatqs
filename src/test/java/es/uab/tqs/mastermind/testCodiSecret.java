@@ -12,7 +12,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 
 
-public class testCodiSecret {
+class TestCodiSecret {
     CodiSecret codi;
 	Aleatori alt;
 	
@@ -31,7 +31,8 @@ public class testCodiSecret {
 		assertTrue(codi.comprovaCodi(Arrays.asList(1,2,2,1)));
 	}
 
-	@Test
+
+    @Test
 	void testComprovaCodi() {
 		// valor normal
 		codi.setCodi(Arrays.asList(1,3,4,2));

@@ -12,14 +12,14 @@ public class Configuracio {
     }
 
     public int getLongitud() {
-
+        return 0;
     }
 
     public int getNumIntents() {
-
+        return 0;
     }
 
     public int getRangDigits() {
-        
+        return 0;
     }
 }
