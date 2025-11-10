@@ -55,7 +55,7 @@ public class MasterMindModel {
 
 	public boolean getHaGuanyat()
 	{
-		return true;
+		return haGuanyat;
 	}
 	
 	public void novaPartida(int longCodi, int intentsMax)
@@ -74,6 +74,20 @@ public class MasterMindModel {
 	
 	public boolean ferJugada(List<Integer> codiProposat)
 	{
-		return true;		
+		assert(codiProposat.size() == codi.getLen() || intentsFets <= intentsMax ) : "Error, fallida";
+
+		intentsFets++;
+		
+		if(codi.comprovaCodi(codiProposat))
+		{
+			haGuanyat = true;
+			return true;
+		}
+		
+		if(intentsFets >= intentsMax)
+		{
+			return true;
+		}
+		return false;		
 	}
 }
