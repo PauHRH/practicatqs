@@ -13,10 +13,99 @@ import org.junit.jupiter.api.Test;
 
 class TestMasterMindModel {
 
-
-	@Test
+    @Test
 	void testNovaPartida() {
+		Aleatori alt = new MockAleatori();
+		MasterMindModel m1 = new MasterMindModel(2,4,alt);
+		//per longitud:
+		//valors frontera:
+		m1.novaPartida(2,5);
+		assertEquals(2,m1.getCodi().getLen());
 		
+		m1.novaPartida(6,5);
+		assertEquals(6,m1.getCodi().getLen());
+		
+		//valors límit
+		try
+		{
+			m1.novaPartida(-1, 4);
+			assertTrue(false);
+		} catch(AssertionError e) {}
+		
+		try
+		{
+			m1.novaPartida(7, 4);
+			assertTrue(false);
+		} catch(AssertionError e) {}
+		
+		try
+		{
+			m1.novaPartida(1,5);
+			assertTrue(false);
+		} catch(AssertionError e) {}
+		
+		m1.novaPartida(5,5);
+		assertEquals(5,m1.getCodi().getLen());
+		
+		//valor entre mig
+		m1.novaPartida(4,5);
+		assertEquals(4,m1.getCodi().getLen());
+		
+		try
+		{
+		    m1.novaPartida(10, 4);
+			assertTrue(false);
+		} catch(AssertionError e) {}
+		
+		try
+		{
+			m1.novaPartida(-5, 4);
+			assertTrue(false);
+		} catch(AssertionError e) {}
+		
+		
+		//per MAX INTENTS
+		//valors frontera: entre 1 i 10 intents
+		MasterMindModel m2 = new MasterMindModel(5,4,alt);
+		m2.novaPartida(4,1);
+		assertEquals(1, m2.getIntentsMax());
+		
+		m2.novaPartida(4,10);
+		assertEquals(10, m2.getIntentsMax());
+		
+		//valors límits
+		m2.novaPartida(4,9);
+		assertEquals(9, m2.getIntentsMax());
+		
+		m2.novaPartida(2,2);
+		assertEquals(2, m2.getIntentsMax());
+
+		try {
+			m2.novaPartida(2,0);
+			assertTrue(false);
+		} catch(AssertionError e) {}
+		
+		try {
+			m2.novaPartida(2,11);
+			assertTrue(false);
+		} catch(AssertionError e) {}
+		
+		//valor entre mig
+		
+		try {
+			m2.novaPartida(2,15);
+			assertTrue(false);
+		} catch(AssertionError e) {}
+		
+		try {
+			m2.novaPartida(2,-5);
+			assertTrue(false);
+		} catch(AssertionError e) {}
+		
+		m2.novaPartida(2,5);
+		assertEquals(5, m2.getIntentsMax());
+		
+		assertEquals(0,m2.getIntentsFets());
 	}
 	
 	@Test
