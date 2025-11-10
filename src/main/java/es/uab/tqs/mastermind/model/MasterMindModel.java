@@ -29,28 +29,27 @@ public class MasterMindModel {
 	
 	public int getIntentsMax()
 	{
-		return 0;
+		return intentsMax;
 	}
 	
 	public void setIntentsFets(int intentsFets)
 	{
-		
+		this.intentsFets = intentsFets;
 	}
 	
 	public void setIntentsMax(int intentsMax)
 	{
-		
-		
+		this.intentsMax = intentsMax;
 	}
 	
 	public int getIntentsFets()
 	{
-		return 0;
+		return intentsFets;
 	}
 	
 	public CodiSecret getCodi()
 	{
-		return null;
+		return codi;
 	}
 	
 
@@ -61,7 +60,16 @@ public class MasterMindModel {
 	
 	public void novaPartida(int longCodi, int intentsMax)
 	{
+		//precondició:
+		assert((longCodi >= 2 && longCodi <= 6)) : "Longitud codi incorrecta";
+		assert((intentsMax >= 1 && intentsMax <= 10)) : "Num intents incorrecta";
 		
+		this.codi = new CodiSecret(this.aleatori, longCodi);
+		this.intentsMax = intentsMax;
+		this.intentsFets = 0;
+
+        //postcondició: 
+        assert(intentsFets == 0) : "IntentsFets no inicialitzat a 0";
 	}
 	
 	public boolean ferJugada(List<Integer> codiProposat)
