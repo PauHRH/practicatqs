@@ -11,13 +11,20 @@ public class MasterMindModel {
 	
 	public List<Integer> getArrayCorrectes(List<Integer> codiProposat)
 	{
-		return null;
+        assert(codiProposat.size() == codi.getLen()) : "Error, longitud codi proposat incorrecte";
+		VerificaIntent vi = new VerificaIntent(codi);
+		return vi.getArrayPosicions(codiProposat);
 	}
 	
 	
 	public MasterMindModel(int longCodi, int intentsMax, Aleatori aleatori)
 	{
-		
+		this.intentsFets = 0;
+		this.intentsMax = intentsMax;
+		this.aleatori = aleatori;
+		this.codi = new CodiSecret(aleatori, longCodi);
+		this.codi.generarCodi();	
+		this.haGuanyat = false;
 	}
 	
 	public int getIntentsMax()
