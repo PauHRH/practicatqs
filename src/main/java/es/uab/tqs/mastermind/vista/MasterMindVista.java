@@ -23,5 +23,10 @@ public abstract class MasterMindVista {
 
     public abstract int recullLongitud();
     public abstract int recullMaxIntents();
+
+    public abstract List<Integer> recullIntent(int longitudEsperada);
+    public abstract void mostrarResultat(List<Integer> resultat);
+    public abstract void mostrarGuanyar();
+    public abstract void mostrarPerdre(List<Integer> codiSecret);
     
 }
