@@ -7,17 +7,18 @@ public abstract class MasterMindVista {
 
     public MasterMindVista()
     {
-
+        scanner = new Scanner(System.in);
     }
 
     public void mostrarBenvinguda()
     {
+    	System.out.println("Benvingut al MasterMind, introdueix la longitud de la paraula que vulguis posar: ");
 
     }
 
     public void demanarMaxIntents()
     {
-
+    	System.out.println("Quants intents vols fer? ");
     }
 
     public abstract int recullLongitud();
