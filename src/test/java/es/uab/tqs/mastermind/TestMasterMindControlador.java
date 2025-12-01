@@ -42,6 +42,7 @@ MasterMindModel model;
         // Intents=1, Resultat=Victoria (guanya a la primera)
         vistaMock.setConfiguracioInicial(4, 1);
         vistaMock.afegirIntentUsuari(Arrays.asList(1, 2, 2, 1));
+        vistaMock.setIndexIntent(0);
 
         controlador.iniciarPartida();
 
@@ -52,7 +53,7 @@ MasterMindModel model;
         // Intents=1, Resultat=Derrota (falla la unica vida)
         vistaMock.setConfiguracioInicial(4, 1);
         vistaMock.afegirIntentUsuari(Arrays.asList(0, 0, 0, 0)); // Incorrecto
-
+        vistaMock.setIndexIntent(0);
         controlador.iniciarPartida();
 
         assertFalse(vistaMock.haMostratGuanyar);
@@ -64,7 +65,7 @@ MasterMindModel model;
         vistaMock.setConfiguracioInicial(4, 5);
         vistaMock.afegirIntentUsuari(Arrays.asList(0, 0, 0, 0)); // Fallo
         vistaMock.afegirIntentUsuari(Arrays.asList(1, 2, 2, 1)); // Acierto
-
+        vistaMock.setIndexIntent(0);
         controlador.iniciarPartida();
 
         assertTrue(vistaMock.haMostratGuanyar);
@@ -75,7 +76,7 @@ MasterMindModel model;
         vistaMock.setConfiguracioInicial(4, 2);
         vistaMock.afegirIntentUsuari(Arrays.asList(0, 0, 0, 0)); 
         vistaMock.afegirIntentUsuari(Arrays.asList(9, 9, 9, 9)); 
-
+        vistaMock.setIndexIntent(0);
         controlador.iniciarPartida();
 
         assertTrue(vistaMock.haMostratPerdre);
@@ -83,6 +84,8 @@ MasterMindModel model;
 
 
     }
+
+    
     private void inserirHistorial(List<List<Integer>> historialSimulat) {
         if (controlador == null) {
              controlador = new MasterMindControlador(new MasterMindModel(new MockAleatori()), new MockMasterMindVista());

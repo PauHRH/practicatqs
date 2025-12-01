@@ -20,10 +20,27 @@ public class MockMasterMindVista extends MasterMindVista {
         super();
     }
 
+    @Override
+    public void mostrarBenvinguda() { }
+
+    @Override
+    public void demanarMaxIntents() { }
+
+    public void setIndexIntent(int index)
+    {
+        this.indexIntent = index;
+    }
+
     // metodes per tests
     public void setConfiguracioInicial(int longitud, int maxIntents) {
         this.longitudSimulada = longitud;
         this.maxIntentsSimulats = maxIntents;
+        // reset d'estat per a noves partides
+        this.indexIntent = 0;
+        this.intentsUsuari.clear();
+        this.haMostratGuanyar = false;
+        this.haMostratPerdre = false;
+        this.resultatsMostrats.clear();
     }
 
     public void afegirIntentUsuari(List<Integer> intent) {
@@ -35,7 +52,8 @@ public class MockMasterMindVista extends MasterMindVista {
         if (indexIntent < intentsUsuari.size()) {
             return intentsUsuari.get(indexIntent++);
         }
-        return new ArrayList<>(); 
+        // retorna llista de 0s si esta buida
+        return new ArrayList<>(java.util.Collections.nCopies(longitudEsperada, 0));
     }
 
     @Override
@@ -57,13 +75,13 @@ public class MockMasterMindVista extends MasterMindVista {
     @Override
     public int recullLongitud()
     {
-        return 4;
+        return this.longitudSimulada;
     }
 
     @Override
     public int recullMaxIntents()
     {
-        return 5;
+        return this.maxIntentsSimulats;
     }
 
 

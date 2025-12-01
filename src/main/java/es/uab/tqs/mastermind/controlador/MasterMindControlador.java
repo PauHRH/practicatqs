@@ -1,5 +1,6 @@
 package es.uab.tqs.mastermind.controlador;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import es.uab.tqs.mastermind.model.MasterMindModel;
@@ -16,6 +17,12 @@ public class MasterMindControlador {
     {
     	this.model = model;
     	this.view = view;
+        historialIntents = new ArrayList<>();
+    }
+
+    public void afegirHistorialIntents(List<Integer> listaNum)
+    {
+        historialIntents.add(listaNum);
     }
 
     public void iniciarPartida() {
@@ -41,15 +48,15 @@ public class MasterMindControlador {
             }
 
             historialIntents.add(intent);
-            boolean haGuanyat = model.ferJugada(intent);
+            boolean partidaAcabada = model.ferJugada(intent);
             List<Integer> feedback = model.getArrayCorrectes(intent);
             view.mostrarResultat(feedback);
 
             // Path Coverage: Camins de victoria, derrota o continuació
-            if (haGuanyat) {
+            if (model.getHaGuanyat()) {
                 view.mostrarGuanyar();
                 fin = true;
-            } else if (model.getIntentsFets() >= model.getIntentsMax()) {
+            } else if (partidaAcabada || model.getIntentsFets() >= model.getIntentsMax()) {
                 view.mostrarPerdre(model.getCodi().getCodi());
                 fin = true;
             }
@@ -57,6 +64,15 @@ public class MasterMindControlador {
     }
 
     public boolean esIntentRepetit(List<Integer> nouIntent) {
+        // Considerem repetit si qualsevol número del nou intent
+        // ja s'ha utilitzat en intents previs (definició segons tests)
+        for (List<Integer> intentAntic : historialIntents) {
+            for (Integer num : nouIntent) {
+                if (intentAntic.contains(num)) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 }

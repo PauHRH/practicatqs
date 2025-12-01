@@ -31,6 +31,7 @@ public class MasterMindModel {
 	{
 		this.intentsFets = 0;
 		this.aleatori = aleatori;
+		this.codi = new CodiSecret(aleatori, 4);
 		this.codi.generarCodi();	
 		this.haGuanyat = false;
 	}
@@ -72,10 +73,11 @@ public class MasterMindModel {
 		assert((longCodi >= 2 && longCodi <= 6)) : "Longitud codi incorrecta";
 		assert((intentsMax >= 1 && intentsMax <= 10)) : "Num intents incorrecta";
 		
-		configuracio = new Configuracio(longCodi, intentsMax, );
 		this.codi = new CodiSecret(this.aleatori, longCodi);
+		this.codi.generarCodi();
 		this.intentsMax = intentsMax;
 		this.intentsFets = 0;
+		this.haGuanyat = false;
 
         //postcondició: 
         assert(intentsFets == 0) : "IntentsFets no inicialitzat a 0";

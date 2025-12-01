@@ -1,7 +1,6 @@
 package es.uab.tqs.mastermind.model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class VerificaIntent {
@@ -15,7 +14,13 @@ public class VerificaIntent {
 	
 	public List<Integer> getArrayPosicions(List<Integer> codiIntroduit) // 0 = incorrecte, 1 = correcte, 2 = num correcte pos no.
 	{
-	    List<Integer> verificador = new ArrayList<>(Arrays.asList(0, 0, 0, 0));
+		if (codiIntroduit.size() != codi.getLen()) {
+			throw new IllegalArgumentException("Error, longitud codi proposat incorrecta: esperat " + codi.getLen() + ", rebut " + codiIntroduit.size());
+		}
+	    List<Integer> verificador = new ArrayList<>();
+	    for (int i = 0; i < codi.getLen(); i++) {
+	        verificador.add(0);
+	    }
 
 	    // copia del codigo secreto para marcar los elementos ya contados
 	    List<Integer> codiCopia = new ArrayList<>(codi.getCodi());
@@ -31,7 +36,7 @@ public class VerificaIntent {
 	    }
 
 	    // marcamos los numeros correctos pero en mala posicion
-	    for (int i = 0; i < codiIntroduit.size(); i++) {
+		for (int i = 0; i < codi.getLen(); i++) {
 	        if (verificador.get(i) == 0) {      // solo los que aun son 0
 	            int index = codiCopia.indexOf(codiIntroduit.get(i));
 	            if (index != -1) {

@@ -1,4 +1,6 @@
 package es.uab.tqs.mastermind.vista;
+import java.util.List;
+import java.util.ArrayList;
 
 public class RealMasterMindVista extends MasterMindVista {
 
