@@ -12,8 +12,6 @@ public class MockAleatoriConfiguracio implements Aleatori{
 		listaIntentsRetornar.add(Arrays.asList(1,3,2,3));
 		listaIntentsRetornar.add(Arrays.asList(3,2,1,5));
 		listaIntentsRetornar.add(Arrays.asList(6,4,3,7));
-		
-		
 	}
 	
 	public List<Integer> getAltNumber(int longitud)
@@ -22,5 +20,4 @@ public class MockAleatoriConfiguracio implements Aleatori{
 		listaIntentsRetornar.remove(0);
 		return primer;
 	}
-
 }
