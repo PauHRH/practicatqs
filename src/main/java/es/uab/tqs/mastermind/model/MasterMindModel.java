@@ -7,7 +7,7 @@ public class MasterMindModel {
 	private int intentsMax;
 	private int intentsFets;
 	private Aleatori aleatori;
-	boolean haGuanyat;
+	private boolean haGuanyat;
 	
 	public List<Integer> getArrayCorrectes(List<Integer> codiProposat)
 	{
@@ -23,6 +23,15 @@ public class MasterMindModel {
 		this.intentsMax = intentsMax;
 		this.aleatori = aleatori;
 		this.codi = new CodiSecret(aleatori, longCodi);
+		this.codi.generarCodi();	
+		this.haGuanyat = false;
+	}
+
+	public MasterMindModel(Aleatori aleatori)
+	{
+		this.intentsFets = 0;
+		this.aleatori = aleatori;
+		this.codi = new CodiSecret(aleatori, 4);
 		this.codi.generarCodi();	
 		this.haGuanyat = false;
 	}
@@ -65,8 +74,10 @@ public class MasterMindModel {
 		assert((intentsMax >= 1 && intentsMax <= 10)) : "Num intents incorrecta";
 		
 		this.codi = new CodiSecret(this.aleatori, longCodi);
+		this.codi.generarCodi();
 		this.intentsMax = intentsMax;
 		this.intentsFets = 0;
+		this.haGuanyat = false;
 
         //postcondició: 
         assert(intentsFets == 0) : "IntentsFets no inicialitzat a 0";
