@@ -2,6 +2,8 @@ package es.uab.tqs.mastermind;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
+import java.util.List;
+
 import es.uab.tqs.mastermind.model.Aleatori;
 import es.uab.tqs.mastermind.model.CodiSecret;
 import es.uab.tqs.mastermind.model.MasterMindModel;
@@ -32,6 +34,11 @@ MasterMindModel model;
     @Test
     void testIniciarPartida()
     {
+        /*
+        Pairwise testing #2
+        */
+
+        // Intents=1, Resultat=Victoria (guanya a la primera)
         vistaMock.setConfiguracioInicial(4, 1);
         vistaMock.afegirIntentUsuari(Arrays.asList(1, 2, 2, 1));
 
@@ -41,17 +48,44 @@ MasterMindModel model;
         assertFalse(vistaMock.haMostratPerdre);
         assertEquals(1, model.getIntentsFets());
 
-        /*
-        Aleatori aleatori = new MockAleatori();
-        model = new MasterMindModel(aleatori););
-        controlador = new MasterMindControlador(vista, model);
+        // Intents=1, Resultat=Derrota (falla la unica vida)
+        vistaMock.setConfiguracioInicial(4, 1);
+        vistaMock.afegirIntentUsuari(Arrays.asList(0, 0, 0, 0)); // Incorrecto
+
         controlador.iniciarPartida();
 
-        //comprovem que agafa bé valors de la vista
-        assertEquals(model.getIntentsMax(), 5);
-        assertEquals(model.getCodi().getLen(), 4);
-        */
+        assertFalse(vistaMock.haMostratGuanyar);
+        assertTrue(vistaMock.haMostratPerdre, "Debe perder por max intentos");
+        assertEquals(1, model.getIntentsFets());
 
+
+        // Intents=5, Resultat=Victoria (guanya en intent intermedi)
+        vistaMock.setConfiguracioInicial(4, 5);
+        vistaMock.afegirIntentUsuari(Arrays.asList(0, 0, 0, 0)); // Fallo
+        vistaMock.afegirIntentUsuari(Arrays.asList(1, 2, 2, 1)); // Acierto
+
+        controlador.iniciarPartida();
+
+        assertTrue(vistaMock.haMostratGuanyar);
+        assertEquals(2, model.getIntentsFets());
+
+
+        // Intents=2, Resultat=Derrota (esgota tots los intents)
+        vistaMock.setConfiguracioInicial(4, 2);
+        vistaMock.afegirIntentUsuari(Arrays.asList(0, 0, 0, 0)); 
+        vistaMock.afegirIntentUsuari(Arrays.asList(9, 9, 9, 9)); 
+
+        controlador.iniciarPartida();
+
+        assertTrue(vistaMock.haMostratPerdre);
+        assertEquals(2, model.getIntentsFets());
+
+
+    }
+
+    @Test
+    void testEsIntentRepetit()
+    {
 
     }
 }
