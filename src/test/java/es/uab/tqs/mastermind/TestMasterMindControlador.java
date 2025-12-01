@@ -1,6 +1,7 @@
 package es.uab.tqs.mastermind;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -82,10 +83,56 @@ MasterMindModel model;
 
 
     }
+    private void inserirHistorial(List<List<Integer>> historialSimulat) {
+        if (controlador == null) {
+             controlador = new MasterMindControlador(new MasterMindModel(new MockAleatori()), new MockMasterMindVista());
+        }
+        if (vistaMock == null) {
+              vistaMock = new MockMasterMindVista();
+        }
+
+        for (List<Integer> historial : historialSimulat) {
+              controlador.afegirHistorialIntents(historial);
+        }
+    }
 
     @Test
     void testEsIntentRepetit()
     {
+        
+        /*
+        Particions equivalents
+         */
+        //cas 1: llista historial buida, no ha de fallar
+        inserirHistorial(new ArrayList<>());
+        List<Integer> intent0 = Arrays.asList(1, 2, 3, 4);
+        assertFalse(controlador.esIntentRepetit(intent0));
 
+        //cas 2: intent amb número NO repetit a historial
+        List<List<Integer>> lista1 = new ArrayList();
+        lista1.add(Arrays.asList(1, 1, 1, 1));
+        lista1.add(Arrays.asList(2,2,2,2));
+        inserirHistorial(lista1);
+        // Intento nuevo
+        List<Integer> intent1 = Arrays.asList(3, 3, 3, 3);
+
+        assertFalse(controlador.esIntentRepetit(intent1));
+
+        //cas 3: intent amb número SÍ repetit a historial
+        //aprofitem historial de cas 2
+        List<Integer> intent2 = Arrays.asList(2,2,2,2);
+        assertTrue(controlador.esIntentRepetit(intent2));
+
+        //cas 4: comprovem primer de historial
+        List<Integer> intent3 = Arrays.asList(1,1,1,1);
+        assertTrue(controlador.esIntentRepetit(intent3));
+
+        //cas 5: comprovem ultim de historial
+        List<Integer> intent4 = Arrays.asList(2,2,2,2);
+        assertTrue(controlador.esIntentRepetit(intent4));
+
+        //cas 6: cas entre mig. Comprovem que amb diversos numeros no es confon
+        List<Integer> intent5 = Arrays.asList(1,2,3,5);
+        assertTrue(controlador.esIntentRepetit(intent5));
     }
 }
