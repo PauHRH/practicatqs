@@ -29,4 +29,51 @@
         <scope>test</scope>
     </dependency>
 </dependencies>
+
+<build>
+    <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <!-- Use release to produce class files compatible with Java 21
+                        when building with a newer JDK; avoids JaCoCo instrumentation
+                        issues on very new class file versions -->
+                    <release>21</release>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.12</version>
+                <executions>
+                    <!-- Activa l'agent de cobertura abans dels tests -->
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+
+                    <!-- Genera l'informe XML que necessita Coverage Gutters -->
+                    <execution>
+                        <id>report</id>
+                        <!-- generar els informes en la fase verify per assegurar que
+                             l'execució dels tests ja ha acabat i l'agent ha produït
+                             el fitxer d'execució de JaCoCo -->
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+    </plugins>
+</build>
 </project>
