@@ -8,13 +8,7 @@ public class CodiSecret{
 	int longitud;
 	Aleatori aleatori;
 	
-	public CodiSecret()
-	{
-		codi = new ArrayList<>();
-		longitud = 0;
-	}
-	
-	public CodiSecret (Aleatori aleatori, int longitud)
+	public CodiSecret(Aleatori aleatori, int longitud)
 	{
 		this.longitud = longitud;
 		this.aleatori = aleatori;
@@ -28,17 +22,13 @@ public class CodiSecret{
 	public void setCodi(List<Integer> codi)
 	{
 		this.codi = codi;
+		this.longitud = codi.size();
 	}
 	
 	
 	public List<Integer> getCodi()
 	{
 		return codi;
-	}
-	
-	public int getPos(int pos)
-	{
-		return codi.get(pos);
 	}
 	
 	public int getLen()
@@ -48,12 +38,13 @@ public class CodiSecret{
 	
 	public boolean comprovaCodi(List<Integer> codiIntroduit)
 	{
-		if (codiIntroduit.isEmpty())
+		if (codi.size() < 2 || codi.size() > 6 || codiIntroduit.size() < 2 ||
+		 codiIntroduit.size() > 6 || codi.size() != codiIntroduit.size())
 		{
-			throw new IllegalArgumentException("No s'ha introduit cap valor a la llista.");		
+			throw new IllegalArgumentException("Algun codi es de mida incorrecte.");
 		}
-		return codi.equals(codiIntroduit);
 
+		return codi.equals(codiIntroduit);
 	}
 	
 }

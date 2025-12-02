@@ -30,19 +30,19 @@ class TestMasterMindModel {
 		{
 			m1.novaPartida(-1, 4);
 			assertTrue(false);
-		} catch(AssertionError e) {}
+		} catch(Exception e) {}
 		
 		try
 		{
 			m1.novaPartida(7, 4);
 			assertTrue(false);
-		} catch(AssertionError e) {}
+		} catch(Exception e) {}
 		
 		try
 		{
 			m1.novaPartida(1,5);
 			assertTrue(false);
-		} catch(AssertionError e) {}
+		} catch(Exception e) {}
 		
 		m1.novaPartida(5,5);
 		assertEquals(5,m1.getCodi().getLen());
@@ -55,13 +55,13 @@ class TestMasterMindModel {
 		{
 		    m1.novaPartida(10, 4);
 			assertTrue(false);
-		} catch(AssertionError e) {}
+		} catch(Exception e) {}
 		
 		try
 		{
 			m1.novaPartida(-5, 4);
 			assertTrue(false);
-		} catch(AssertionError e) {}
+		} catch(Exception e) {}
 		
 		
 		//per MAX INTENTS
@@ -83,24 +83,24 @@ class TestMasterMindModel {
 		try {
 			m2.novaPartida(2,0);
 			assertTrue(false);
-		} catch(AssertionError e) {}
+		} catch(Exception e) {}
 		
 		try {
 			m2.novaPartida(2,11);
 			assertTrue(false);
-		} catch(AssertionError e) {}
+		} catch(Exception e) {}
 		
 		//valor entre mig
 		
 		try {
 			m2.novaPartida(2,15);
 			assertTrue(false);
-		} catch(AssertionError e) {}
+		} catch(Exception e) {}
 		
 		try {
 			m2.novaPartida(2,-5);
 			assertTrue(false);
-		} catch(AssertionError e) {}
+		} catch(Exception e) {}
 		
 		m2.novaPartida(2,5);
 		assertEquals(5, m2.getIntentsMax());
@@ -122,19 +122,19 @@ class TestMasterMindModel {
 		assertTrue(m1.getHaGuanyat());
 		
 		//Ha guanyat amb num intents max 5, intentsfets 4 canvia a 5 però guanya igual
-		MasterMindModel m2 = new MasterMindModel(4,1,alt);
+		MasterMindModel m2 = new MasterMindModel(4,5,alt);
 		m2.setIntentsFets(4);
 		assertTrue(m2.ferJugada(Arrays.asList(1,2,2,1)));
 		assertEquals(5, m2.getIntentsFets());
 		assertTrue(m2.getHaGuanyat());
 		
 		//Intenta guanyar amb 5 intents, INTENTS fets 5 ERROR
-		MasterMindModel m3 = new MasterMindModel(4,0,alt);
+		MasterMindModel m3 = new MasterMindModel(4,5,alt);
 		m3.setIntentsFets(5);
 		try {
 			m3.ferJugada(Arrays.asList(1,2,2,1));
 			assertTrue(false);
-		} catch (AssertionError e) {}
+		} catch (Exception e) {}
 		
 		//Intenta guanyar amb valor SUPERIORS de INTENTSFETS a MAX
 		MasterMindModel m4 = new MasterMindModel(4,4,alt);
@@ -142,15 +142,15 @@ class TestMasterMindModel {
 		try {
 			m4.ferJugada(Arrays.asList(1,2,2,1));
 			assertTrue(false);
-		} catch (AssertionError e) {}
+		} catch (Exception e) {}
 		
 		
 		MasterMindModel m5 = new MasterMindModel(4,4,alt);
-		m4.setIntentsFets(10);
+		m5.setIntentsFets(10);
 		try {
 			m5.ferJugada(Arrays.asList(1,2,2,1));
 			assertTrue(false);
-		} catch (AssertionError e) {}
+		} catch (Exception e) {}
 		
 		//Perd una ronda, no l'ha esbrinat però segueix el joc
 		
@@ -174,7 +174,7 @@ class TestMasterMindModel {
 		try {
 			m8.ferJugada(Arrays.asList(1,2,2,0));
 			assertTrue(false);
-		} catch(AssertionError e) {}
+		} catch(Exception e) {}
 		
 		
 		//Intenta fer ronda perduda però amb intent negatiu
@@ -183,7 +183,7 @@ class TestMasterMindModel {
 		try {
 			m9.ferJugada(Arrays.asList(1,2,2,0));
 			assertTrue(false);
-		} catch(AssertionError e) {}
+		} catch(Exception e) {}
 		
 		//Array no coincideix amb mida de valor a introduir, error
 		
@@ -191,12 +191,12 @@ class TestMasterMindModel {
 		try {
 			m10.ferJugada(Arrays.asList(1,2,2));
 			assertTrue(false);
-		} catch(AssertionError e) {}
+		} catch(Exception e) {}
 		
 		try {
 			m10.ferJugada(Arrays.asList(1,2,2,6,7));
 			assertTrue(false);
-		} catch(AssertionError e) {}	
+		} catch(Exception e) {}	
 	}
 
 	@Test
@@ -244,19 +244,19 @@ class TestMasterMindModel {
 		{
 		m1.getArrayCorrectes(Arrays.asList(-1,1,2,4));
 		assertTrue(false);
-		}catch(Error e) {}
+		}catch(Exception e) {}
 		try
 		{
 		m1.getArrayCorrectes(Arrays.asList(-1,1,10,4));
 		assertTrue(false);
-		} catch (Error e) {}
+		} catch (Exception e) {}
 		
-		//lista amb valors menors a codi
+		//llista amb valors menors a codi
 		try
 		{
 		m1.getArrayCorrectes(Arrays.asList(1,1,10));
 		assertTrue(false);
-		} catch (AssertionError e) {}
+		} catch (Exception e) {}
 	}
 
 }
