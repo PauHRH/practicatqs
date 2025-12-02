@@ -15,7 +15,7 @@ public class VerificaIntent {
 	public List<Integer> getArrayPosicions(List<Integer> codiIntroduit) // 0 = incorrecte, 1 = correcte, 2 = num correcte pos no.
 	{
 		if (codiIntroduit.size() != codi.getLen()) {
-			throw new IllegalArgumentException("Error, longitud codi proposat incorrecta: esperat " + codi.getLen() + ", rebut " + codiIntroduit.size());
+			throw new Error("Error, longitud codi proposat incorrecta: esperat " + codi.getLen() + ", rebut " + codiIntroduit.size());
 		}
 	    List<Integer> verificador = new ArrayList<>();
 	    for (int i = 0; i < codi.getLen(); i++) {
@@ -27,8 +27,8 @@ public class VerificaIntent {
 
 	    // primero marcamos los correctos (posicion y numero)
 	    for (int i = 0; i < codi.getLen(); i++) {
-	    	if(codiIntroduit.get(i) < 0 || codiIntroduit.get(i) > 9)
-	    		throw new Error("Error, valor fuera del límite");
+			if(codiIntroduit.get(i) < 0 || codiIntroduit.get(i) > 9)
+				throw new Error("Error, valor fuera del límite");
 	        if (codi.getCodi().get(i).equals(codiIntroduit.get(i))) {
 	            verificador.set(i, 1);          // correcto
 	            codiCopia.set(i, -1);           // marcar como usado
