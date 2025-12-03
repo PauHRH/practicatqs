@@ -13,7 +13,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 
 
-class TestCodiSecret1 {
+class TestCodiSecret {
     CodiSecret codi;
 	Aleatori alt;
 	
