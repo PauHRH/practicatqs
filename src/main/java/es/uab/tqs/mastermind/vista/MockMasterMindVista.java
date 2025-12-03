@@ -84,5 +84,9 @@ public class MockMasterMindVista extends MasterMindVista {
         return this.maxIntentsSimulats;
     }
 
+    public void getInstruccions()
+    {
+        
+    }
 
 }

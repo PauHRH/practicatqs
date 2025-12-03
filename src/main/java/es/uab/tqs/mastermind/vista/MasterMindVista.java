@@ -28,5 +28,6 @@ public abstract class MasterMindVista {
     public abstract void mostrarResultat(List<Integer> resultat);
     public abstract void mostrarGuanyar();
     public abstract void mostrarPerdre(List<Integer> codiSecret);
+    public abstract void getInstruccions();
     
 }
