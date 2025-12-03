@@ -37,11 +37,6 @@ public class MasterMindModel {
 		this.intentsFets = intentsFets;
 	}
 	
-	public void setIntentsMax(int intentsMax)
-	{
-		this.intentsMax = intentsMax;
-	}
-	
 	public int getIntentsFets()
 	{
 		return intentsFets;
