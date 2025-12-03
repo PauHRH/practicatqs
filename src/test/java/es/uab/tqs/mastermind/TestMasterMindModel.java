@@ -127,9 +127,9 @@ class TestMasterMindModel {
 		Aleatori alt = new MockAleatori();
 		MasterMindModel m1 = new MasterMindModel(4,5,alt);
 		
-		//ha guanyat, no ha guanyat, fin partida per max intents 
-		//hem de provar aquests casos
-		
+		/*
+			Particions equivalents
+		*/
 		//Ha guanyat amb num max intents 5, suma 1 a intents fets 0
 		assertTrue(m1.ferJugada(Arrays.asList(1,2,2,1)));
 		assertEquals(1, m1.getIntentsFets());
@@ -150,7 +150,7 @@ class TestMasterMindModel {
 			assertTrue(false);
 		} catch (Exception e) {}
 		
-		//Intenta guanyar amb valor SUPERIORS de INTENTSFETS a MAX
+		//Intenta guanyar amb valor SUPERIORS de INTENTS fets a MAX
 		MasterMindModel m4 = new MasterMindModel(4,4,alt);
 		m4.setIntentsFets(6);
 		try {
@@ -167,9 +167,7 @@ class TestMasterMindModel {
 		} catch (Exception e) {}
 		
 		//Perd una ronda, no l'ha esbrinat però segueix el joc
-		
 		MasterMindModel m6 = new MasterMindModel(4,5,alt);
-		
 		assertFalse(m6.ferJugada(Arrays.asList(1,2,2,0)));
 		assertEquals(1, m6.getIntentsFets());
 		assertFalse(m6.getHaGuanyat());
@@ -182,7 +180,6 @@ class TestMasterMindModel {
 		assertFalse(m7.getHaGuanyat());
 		
 		//Intenta fer una ronda perduda però sense intents
-		
 		MasterMindModel m8 = new MasterMindModel(4,5,alt);
 		m8.setIntentsFets(5);
 		try {
@@ -190,17 +187,7 @@ class TestMasterMindModel {
 			assertTrue(false);
 		} catch(Exception e) {}
 		
-		
-		//Intenta fer ronda perduda però amb intent negatiu
-		MasterMindModel m9 = new MasterMindModel(4,5,alt);
-		m9.setIntentsFets(6);
-		try {
-			m9.ferJugada(Arrays.asList(1,2,2,0));
-			assertTrue(false);
-		} catch(Exception e) {}
-		
-		//Array no coincideix amb mida de valor a introduir, error
-		
+		// Longitud array introduïda no coincideix amb la mida del codiSecret
 		MasterMindModel m10 = new MasterMindModel(4,5,alt);
 		try {
 			m10.ferJugada(Arrays.asList(1,2,2));
