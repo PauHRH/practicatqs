@@ -32,6 +32,8 @@ public class MasterMindControlador {
         view.demanarMaxIntents();
         int maxIntents = view.recullMaxIntents();
 
+        view.getInstruccions();
+
         model.novaPartida(longitud, maxIntents);
         historialIntents.clear(); 
 
@@ -44,6 +46,7 @@ public class MasterMindControlador {
             // verifica si ja s'ha posat anteriorment
             if (esIntentRepetit(intent)) {
                 // si és repetit, tornem a demanar codi (pasa al principi del bucle)
+
                 continue; 
             }
 
@@ -64,15 +67,34 @@ public class MasterMindControlador {
     }
 
     public boolean esIntentRepetit(List<Integer> nouIntent) {
-        // Considerem repetit si qualsevol número del nou intent
-        // ja s'ha utilitzat en intents previs (definició segons tests)
+        // recorrem tot l'historial d'intents fets
         for (List<Integer> intentAntic : historialIntents) {
-            for (Integer num : nouIntent) {
-                if (intentAntic.contains(num)) {
-                    return true;
+            
+            // Assumim que són iguals fins que demostrem el contrari
+            boolean esIdentic = true;
+
+            // Si tenen mides diferents, segur que no són el mateix intent
+            if (intentAntic.size() != nouIntent.size()) {
+                continue; 
+            }
+
+            // recorrem número a número (per índex)
+            for (int i = 0; i < nouIntent.size(); i++) {
+                // Comparem el número de la posició 'i' de l'intent antic amb el nou
+                if (!intentAntic.get(i).equals(nouIntent.get(i))) {
+                    esIdentic = false;
+                    break; // Si un número ja no coincideix, sortim d'aquest bucle intern
                 }
             }
+
+            // Si després de mirar tots els números 'esIdentic' segueix sent true,
+            // vol dir que hem trobat una coincidència exacta.
+            if (esIdentic) {
+                return true;
+            }
         }
+        
+        // Si hem mirat tot l'historial i no hem trobat cap idèntic
         return false;
     }
 }

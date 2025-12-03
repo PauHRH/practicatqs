@@ -9,6 +9,7 @@ public class RealMasterMindVista extends MasterMindVista {
 		super();
 	}
 
+    
 	@Override
 	public int recullLongitud()
     {
@@ -31,6 +32,8 @@ public class RealMasterMindVista extends MasterMindVista {
         return maxIntents;
     }
 
+
+
 	@Override
     public List<Integer> recullIntent(int longitudEsperada) {
         List<Integer> intent = new ArrayList<>();
@@ -45,7 +48,28 @@ public class RealMasterMindVista extends MasterMindVista {
 
     @Override
     public void mostrarResultat(List<Integer> resultat) {
-        System.out.println("Resultat: " + resultat.toString());
+        System.out.println("----- Resultat detallat -----");
+        for (int i = 0; i < resultat.size(); i++) {
+            int valor = resultat.get(i);
+            String missatge = "";
+            
+            // 0 = incorrecte, 1 = correcte, 2 = num correcte pos no.
+            switch (valor) {
+                case 1:
+                    missatge = "[OK] Correcte (Posició i Número)";
+                    break;
+                case 2:
+                    missatge = "[?!] Número correcte, però posició incorrecta";
+                    break;
+                case 0:
+                    missatge = "[X] Incorrecte";
+                    break;
+                default:
+                    missatge = "Desconegut";
+            }
+            System.out.println("Posició " + (i + 1) + ": " + missatge);
+        }
+        System.out.println("-----------------------------");
     }
 
     @Override
@@ -56,5 +80,11 @@ public class RealMasterMindVista extends MasterMindVista {
     @Override
     public void mostrarPerdre(List<Integer> codiSecret) {
         System.out.println("Has perdut. El codi era: " + codiSecret.toString());
+    }
+
+    public void getInstruccions()
+    {
+        System.out.println("INSTRUCCIONS DEL JOC:");
+        System.out.println("Has d'introduir els diversos valors separats en espais, és a dir, si vols introduir el valor 1234 l'has d'introduir d'aquesta manera: 1 2 3 4");
     }
 }
