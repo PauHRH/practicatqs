@@ -16,7 +16,11 @@ public class CodiSecret{
 	
 	public void generarCodi()
 	{
-		codi = aleatori.getAltNumber(4);
+		codi = aleatori.getAltNumber(longitud);
+		if (codi.size() < 2 || codi.size() > 6)
+		{
+			throw new IllegalArgumentException("Algun codi es de mida incorrecte.");
+		}
 	}
 	
 	public void setCodi(List<Integer> codi)

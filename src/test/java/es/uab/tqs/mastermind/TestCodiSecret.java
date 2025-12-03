@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import es.uab.tqs.mastermind.model.Aleatori;
 import es.uab.tqs.mastermind.model.CodiSecret;
 import es.uab.tqs.mastermind.model.MockAleatori;
+import es.uab.tqs.mastermind.model.MockAleatoriCodiSecret;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,9 +28,71 @@ class TestCodiSecret {
 
 	@Test
 	void testGenerarCodi() {
-		codi.generarCodi();
+
+		/*
+			Particions equivalents per longitud 2 (Valor frontera)
+		*/
+		Aleatori altCodiGenerar = new MockAleatoriCodiSecret(Arrays.asList(1,3));
+		CodiSecret test1 = new CodiSecret(altCodiGenerar, 2);
+		test1.generarCodi();	
+		assertTrue(test1.comprovaCodi(Arrays.asList(1,3)));
 		
-		assertTrue(codi.comprovaCodi(Arrays.asList(1,2,2,1)));
+		/*
+			Particions equivalents per longitud 6 (Valor frontera)
+		*/
+		CodiSecret test2 = new CodiSecret(altCodiGenerar, 6);
+		test2.generarCodi();
+		assertTrue(test2.comprovaCodi(Arrays.asList(1,2,3,4,5,4)));
+		
+		/*
+			Particions equivalents per longitud 1 (Valor límit)
+		*/
+		CodiSecret test3 = new CodiSecret(altCodiGenerar, 1);
+		try
+		{
+			test3.generarCodi();
+			assertTrue(test3.comprovaCodi(Arrays.asList(1)));
+			assertTrue(false);
+		} catch(Exception e) {}
+
+		/*
+			Particions equivalents per longitud 3 (Valor límit)
+		*/
+		CodiSecret test4 = new CodiSecret(altCodiGenerar, 3);
+		test4.generarCodi();
+		assertTrue(test4.comprovaCodi(Arrays.asList(1,2,3)));
+		
+		/*
+			Particions equivalents per longitud 5 (Valor límit)
+		*/
+		CodiSecret test5 = new CodiSecret(altCodiGenerar, 5);
+		test5.generarCodi();
+		assertTrue(test5.comprovaCodi(Arrays.asList(1,2,3,4,5)));
+
+
+		/*
+			Particions equivalents per longitud 7 (Valor límit)
+		*/
+		CodiSecret test6 = new CodiSecret(altCodiGenerar, 7);
+
+		try {
+			test6.generarCodi();
+			assertTrue(test6.comprovaCodi(Arrays.asList(1,2,3,4,5,6,7)));
+			assertTrue(false);
+		} catch(Exception e) {}
+
+		/*
+			Particions equivalents per longitud 8 (Valor fora de rang per sobre)
+		*/
+		CodiSecret test7 = new CodiSecret(altCodiGenerar, 8);
+
+		
+		try{
+			test7.generarCodi();
+			assertTrue(test7.comprovaCodi(Arrays.asList(1,2,3,4,5,6,7,8)));
+			assertTrue(false);
+		} catch(Exception e) {}
+
 	}
 
 
