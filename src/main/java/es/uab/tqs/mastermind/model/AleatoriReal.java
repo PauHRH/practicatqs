@@ -7,6 +7,11 @@ import java.util.Random;
 public class AleatoriReal implements Aleatori{
     	
 	
+	public AleatoriReal()
+	{
+
+	}
+
 	public List<Integer> getAltNumber(int longitud)
 	{
 		List<Integer> list = new ArrayList<>();
