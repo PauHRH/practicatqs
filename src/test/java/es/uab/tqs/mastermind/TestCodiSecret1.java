@@ -13,7 +13,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 
 
-class TestCodiSecret {
+class TestCodiSecret1 {
     CodiSecret codi;
 	Aleatori alt;
 	
@@ -54,7 +54,7 @@ class TestCodiSecret {
 			assertTrue(test3.comprovaCodi(Arrays.asList(1)));
 			assertTrue(false);
 		} catch(Exception e) {}
-		
+
 		/*
 			Particions equivalents per longitud 3 (Valor límit)
 		*/
