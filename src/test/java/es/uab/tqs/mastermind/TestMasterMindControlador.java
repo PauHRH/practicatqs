@@ -116,9 +116,9 @@ MasterMindModel model;
         lista1.add(Arrays.asList(1, 1, 1, 1));
         lista1.add(Arrays.asList(2,2,2,2));
         inserirHistorial(lista1);
+
         // Intento nuevo
         List<Integer> intent1 = Arrays.asList(3, 3, 3, 3);
-
         assertFalse(controlador.esIntentRepetit(intent1));
 
         //cas 3: intent amb número SÍ repetit a historial
@@ -136,6 +136,11 @@ MasterMindModel model;
 
         //cas 6: cas entre mig. Comprovem que amb diversos numeros no es confon
         List<Integer> intent5 = Arrays.asList(1,2,3,5);
-        assertTrue(controlador.esIntentRepetit(intent5));
+        assertFalse(controlador.esIntentRepetit(intent5));
+
+        //cas 7: cas entre mig. Comprovem amb valor entre mig després d'haver afegit 
+        //altres que existeixi
+        List<Integer> intent6 = Arrays.asList(2,2,2,2);
+        assertTrue(controlador.esIntentRepetit(intent6));
     }
 }
