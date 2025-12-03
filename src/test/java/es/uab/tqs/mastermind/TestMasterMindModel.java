@@ -17,95 +17,109 @@ class TestMasterMindModel {
 	void testNovaPartida() {
 		Aleatori alt = new MockAleatori();
 		MasterMindModel m1 = new MasterMindModel(2,4,alt);
-		//per longitud:
-		//valors frontera:
-		m1.novaPartida(2,5);
-		assertEquals(2,m1.getCodi().getLen());
-		
-		m1.novaPartida(6,5);
-		assertEquals(6,m1.getCodi().getLen());
-		
-		//valors límit
+
+		/*
+			Particions equivalents per longCodi	
+		*/
+		// Valors fora de rang cap als negatius (< 2)
 		try
 		{
-			m1.novaPartida(-1, 4);
+			m1.novaPartida(-5, 5);
 			assertTrue(false);
 		} catch(Exception e) {}
-		
 		try
 		{
-			m1.novaPartida(7, 4);
+			m1.novaPartida(-1, 5);
 			assertTrue(false);
 		} catch(Exception e) {}
-		
+		// Valor límit (1)
 		try
 		{
 			m1.novaPartida(1,5);
 			assertTrue(false);
 		} catch(Exception e) {}
-		
-		m1.novaPartida(5,5);
-		assertEquals(5,m1.getCodi().getLen());
-		
-		//valor entre mig
+		// Valor frontera (2)
+		m1.novaPartida(2,5);
+		assertEquals(2,m1.getCodi().getLen());
+		// Valor límit (3)
+		m1.novaPartida(3,5);
+		assertEquals(3,m1.getCodi().getLen());
+		// Valors intermitjos (4)
 		m1.novaPartida(4,5);
 		assertEquals(4,m1.getCodi().getLen());
-		
+		// Valor límit (5)
+		m1.novaPartida(5,5);
+		assertEquals(5,m1.getCodi().getLen());
+		// Valor frontera (6)
+		m1.novaPartida(6,5);
+		assertEquals(6,m1.getCodi().getLen());
+		// Valor límit (7)
 		try
 		{
-		    m1.novaPartida(10, 4);
+			m1.novaPartida(7, 5);
+			assertTrue(false);
+		} catch(Exception e) {}
+		// Valors fora de rang cap als positius (> 6)
+		try
+		{
+			m1.novaPartida(10, 5);
 			assertTrue(false);
 		} catch(Exception e) {}
 		
+		/*
+			Particions equivalents per intentsMax	
+		*/
+		// Valors fora de rang cap als negatius (< 1)
 		try
 		{
-			m1.novaPartida(-5, 4);
+			m1.novaPartida(5, -1);
 			assertTrue(false);
 		} catch(Exception e) {}
-		
-		
-		//per MAX INTENTS
-		//valors frontera: entre 1 i 10 intents
-		MasterMindModel m2 = new MasterMindModel(5,4,alt);
-		m2.novaPartida(4,1);
-		assertEquals(1, m2.getIntentsMax());
-		
-		m2.novaPartida(4,10);
-		assertEquals(10, m2.getIntentsMax());
-		
-		//valors límits
-		m2.novaPartida(4,9);
-		assertEquals(9, m2.getIntentsMax());
-		
-		m2.novaPartida(2,2);
-		assertEquals(2, m2.getIntentsMax());
+		try
+		{
+			m1.novaPartida(5, -5);
+			assertTrue(false);
+		} catch(Exception e) {}
+		// Valor límit (0)
+		try
+		{
+			m1.novaPartida(5,0);
+			assertTrue(false);
+		} catch(Exception e) {}
+		// Valor frontera (1)
+		m1.novaPartida(5,1);
+		assertEquals(1,m1.getIntentsMax());
+		// Valor límit (2)
+		m1.novaPartida(5,2);
+		assertEquals(2,m1.getIntentsMax());
+		// Valors intermitjos (4)
+		m1.novaPartida(5,4);
+		assertEquals(4,m1.getIntentsMax());
+		// Valor límit (9)
+		m1.novaPartida(5,9);
+		assertEquals(9,m1.getIntentsMax());
+		// Valor frontera (10)
+		m1.novaPartida(5,10);
+		assertEquals(10,m1.getIntentsMax());
+		// Valor límit (11)
+		try
+		{
+			m1.novaPartida(5, 11);
+			assertTrue(false);
+		} catch(Exception e) {}
+		// Valors fora de rang cap als positius (> 10)
+		try
+		{
+			m1.novaPartida(5, 15);
+			assertTrue(false);
+		} catch(Exception e) {}
 
-		try {
-			m2.novaPartida(2,0);
-			assertTrue(false);
-		} catch(Exception e) {}
-		
-		try {
-			m2.novaPartida(2,11);
-			assertTrue(false);
-		} catch(Exception e) {}
-		
-		//valor entre mig
-		
-		try {
-			m2.novaPartida(2,15);
-			assertTrue(false);
-		} catch(Exception e) {}
-		
-		try {
-			m2.novaPartida(2,-5);
-			assertTrue(false);
-		} catch(Exception e) {}
-		
-		m2.novaPartida(2,5);
-		assertEquals(5, m2.getIntentsMax());
-		
-		assertEquals(0,m2.getIntentsFets());
+		/*
+			Particio reinici de partida
+		*/
+		m1.novaPartida(4, 6);
+		assertEquals(0, m1.getIntentsFets());
+        assertFalse(m1.getHaGuanyat());
 	}
 	
 	@Test

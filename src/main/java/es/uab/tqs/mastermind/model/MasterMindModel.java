@@ -8,24 +8,6 @@ public class MasterMindModel {
 	private Aleatori aleatori;
 	private boolean haGuanyat;
 	
-	public List<Integer> getArrayCorrectes(List<Integer> codiProposat)
-	{
-		for (int c : codiProposat)
-		{
-			if (c < 0 || c > 9)
-				throw new IllegalArgumentException("Numero incorrecte en el codi proposat.");
-		}
-		
-		if (codiProposat.size() != codi.getLen()) 
-		{
-			throw new IllegalArgumentException("Longitud codi proposat incorrecta");
-		}
-		
-		VerificaIntent vi = new VerificaIntent(codi);
-		return vi.getArrayPosicions(codiProposat);
-	}
-	
-	
 	public MasterMindModel(int longCodi, int intentsMax, Aleatori aleatori)
 	{
 		this.intentsFets = 0;
@@ -121,4 +103,23 @@ public class MasterMindModel {
 		}
 		return false;		
 	}
+
+	public List<Integer> getArrayCorrectes(List<Integer> codiProposat)
+	{
+		for (int c : codiProposat)
+		{
+			if (c < 0 || c > 9)
+				throw new IllegalArgumentException("Numero incorrecte en el codi proposat.");
+		}
+		
+		if (codiProposat.size() != codi.getLen()) 
+		{
+			throw new IllegalArgumentException("Longitud codi proposat incorrecta");
+		}
+		
+		VerificaIntent vi = new VerificaIntent(codi);
+		return vi.getArrayPosicions(codiProposat);
+	}
+	
+	
 }
