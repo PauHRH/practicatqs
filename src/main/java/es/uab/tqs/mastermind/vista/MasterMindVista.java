@@ -12,13 +12,13 @@ public abstract class MasterMindVista {
 
     public void mostrarBenvinguda()
     {
-    	System.out.println("Benvingut al MasterMind, introdueix la longitud de la paraula que vulguis posar: ");
+    	System.out.println("Benvingut al MasterMind, introdueix la longitud (entre 2 i 6) de la paraula que vulguis posar: ");
 
     }
 
     public void demanarMaxIntents()
     {
-    	System.out.println("Quants intents vols fer? ");
+    	System.out.println("Quants intents vols fer? Introdueix un número entre 1 i 10.");
     }
 
     public abstract int recullLongitud();

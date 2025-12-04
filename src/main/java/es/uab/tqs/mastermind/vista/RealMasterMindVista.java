@@ -3,7 +3,6 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class RealMasterMindVista extends MasterMindVista {
-
     public RealMasterMindVista()
 	{
 		super();
@@ -14,10 +13,17 @@ public class RealMasterMindVista extends MasterMindVista {
 	public int recullLongitud()
     {
     	int longitud = 0;
-    	if (scanner.hasNextInt()) {
-            longitud = scanner.nextInt();
-    	}
-    	assert(longitud != 0) : "Error, la longitud no ha estat introduida";
+        boolean valid = false;
+        while(!valid)
+        {
+            if (scanner.hasNextInt()) {
+                longitud = scanner.nextInt();
+            }
+            if (longitud >= 2 && longitud <= 6)
+            {
+                valid = true;
+            }
+        }
         return longitud;
     }
 	
@@ -25,22 +31,53 @@ public class RealMasterMindVista extends MasterMindVista {
     public int recullMaxIntents()
     {
     	int maxIntents = 0;
-    	if (scanner.hasNextInt()) {
-    		maxIntents = scanner.nextInt();
-    	}
-    	assert(maxIntents >= 1 && maxIntents <= 10) : "Error, la longitud no ha estat introduida";
+        boolean valid = false;
+        while(!valid)
+        {
+            if (scanner.hasNextInt()) {
+                maxIntents = scanner.nextInt();
+            }
+            if (maxIntents >= 1 && maxIntents <= 10)
+            {                
+                valid = true;
+            }
+        }
         return maxIntents;
     }
 
 
 
-	@Override
+    @Override
     public List<Integer> recullIntent(int longitudEsperada) {
         List<Integer> intent = new ArrayList<>();
-        System.out.println("Introdueix el teu intent (" + longitudEsperada + " numeros):");
-        for(int i=0; i<longitudEsperada; i++) {
-            if(scanner.hasNextInt()) {
-                intent.add(scanner.nextInt());
+        boolean valid = false;
+        while (!valid) {
+            intent.clear();
+            System.out.println("Introdueix el teu intent (" + longitudEsperada + " números, separats per espais):");
+            String linia = scanner.nextLine();
+            String[] parts = linia.trim().split("\\s+");
+            if (parts.length != longitudEsperada) {
+                System.out.println("Has d'introduir exactament " + longitudEsperada + " números.");
+                continue;
+            }
+            boolean totValid = true;
+            for (String part : parts) {
+                try {
+                    int valor = Integer.parseInt(part);
+                    if (valor < 0 || valor > 9) {
+                        totValid = false;
+                        break;
+                    }
+                    intent.add(valor);
+                } catch (NumberFormatException e) {
+                    totValid = false;
+                    break;
+                }
+            }
+            if (!totValid) {
+                System.out.println("Tots els números han de ser entre 0 i 9. Torna a introduir la seqüència.");
+            } else {
+                valid = true;
             }
         }
         return intent;
