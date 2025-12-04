@@ -14,10 +14,17 @@ public class RealMasterMindVista extends MasterMindVista {
 	public int recullLongitud()
     {
     	int longitud = 0;
-    	if (scanner.hasNextInt()) {
-            longitud = scanner.nextInt();
-    	}
-    	assert(longitud != 0) : "Error, la longitud no ha estat introduida";
+        boolean valid = false;
+        while(!valid)
+        {
+            if (scanner.hasNextInt()) {
+                longitud = scanner.nextInt();
+            }
+            if (longitud >= 2 && longitud <= 6)
+            {
+                valid = true;
+            }
+        }
         return longitud;
     }
 	
@@ -25,10 +32,17 @@ public class RealMasterMindVista extends MasterMindVista {
     public int recullMaxIntents()
     {
     	int maxIntents = 0;
-    	if (scanner.hasNextInt()) {
-    		maxIntents = scanner.nextInt();
-    	}
-    	assert(maxIntents >= 1 && maxIntents <= 10) : "Error, la longitud no ha estat introduida";
+        boolean valid = false;
+        while(!valid)
+        {
+            if (scanner.hasNextInt()) {
+                maxIntents = scanner.nextInt();
+            }
+            if (maxIntents >= 1 && maxIntents <= 10)
+            {                
+                valid = true;
+            }
+        }
         return maxIntents;
     }
 
