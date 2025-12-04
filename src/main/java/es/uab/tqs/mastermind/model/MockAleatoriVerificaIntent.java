@@ -1,38 +1,33 @@
 package es.uab.tqs.mastermind.model;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class MockAleatoriVerificaIntent implements Aleatori {
-    private static List<List<Integer>> codisGlobals = new ArrayList<>();
-	private static int indexGlobal = 0;
-	
-	static {
-		//Codis que es comparteixen entre totes les instancies
-		codisGlobals.add(Arrays.asList(1,3,2,3));  // Per verifica
-		codisGlobals.add(Arrays.asList(1,2,3,4));  // Per verifica2 (sense repeticions)
-	}
-	
-	public MockAleatoriVerificaIntent()
-	{
-		
-	}
-	
-	public List<Integer> getAltNumber(int longitud)
-	{
-		if (indexGlobal < codisGlobals.size()) {
-			return codisGlobals.get(indexGlobal++);
-		}
-		// Si es demanen més codis, retorna el últim
-		return codisGlobals.get(codisGlobals.size() - 1);
-	}
 
-	public List<Integer> getValorByPosicio(int index)
-	{
-		if (index < codisGlobals.size()) {
-			return codisGlobals.get(index);
-		}
-		return new ArrayList<>();
-	}
+    private final List<List<Integer>> codis;
+    private int index = 0;
+
+    public MockAleatoriVerificaIntent() {
+        this.codis = Arrays.asList(
+                Arrays.asList(1,3,2,3), // primer codi
+                Arrays.asList(1,2,3,4)  // segon codi
+        );
+    }
+
+    @Override
+    public List<Integer> getAltNumber(int longitud) {
+        if (index < codis.size()) {
+            return codis.get(index++);
+        }
+        // si ja no queden codis, retorna l’últim sempre
+        return codis.get(codis.size() - 1);
+    }
+
+    public List<Integer> getValorByPosicio(int pos) {
+        if (pos >= 0 && pos < codis.size()) {
+            return codis.get(pos);
+        }
+        return codis.get(codis.size() - 1);
+    }
 }

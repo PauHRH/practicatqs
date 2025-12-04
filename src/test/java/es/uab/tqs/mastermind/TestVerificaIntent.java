@@ -6,6 +6,13 @@ import es.uab.tqs.mastermind.model.CodiSecret;
 import es.uab.tqs.mastermind.model.VerificaIntent;
 import es.uab.tqs.mastermind.model.MockAleatoriVerificaIntent;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
@@ -30,8 +37,46 @@ class TestVerificaIntent {
 		Aleatori aleatori2 = new MockAleatoriVerificaIntent();
 		codi2 = new CodiSecret(aleatori2, 4);
 		codi2.generarCodi();
+		codi2.generarCodi();
 		verifica2 = new VerificaIntent(codi2);
 	}
+
+	
+	//passem d'string a list el string del fitxer csv
+	 private List<Integer> stringToList(String s) {
+        if (s == null || s.trim().isEmpty()) return new ArrayList<>();
+        return Stream.of(s.split(","))
+                     .map(String::trim)
+                     .map(Integer::parseInt)
+                     .collect(Collectors.toList());
+    }
+
+    @ParameterizedTest(name = "Intent: {0} -> Resultat Esperat: {1}")
+    @CsvSource(delimiter = ';', value = {
+        "1, 3, 2, 3; 1, 1, 1, 1",  // Tot correcte
+        "4, 3, 2, 3; 0, 1, 1, 1",  // 1r incorrecte
+        "1, 5, 2, 3; 1, 0, 1, 1",  // 2n incorrecte
+        "6, 5, 2, 3; 0, 0, 1, 1",  // Dos incorrectes
+        "4, 1, 2, 9; 0, 2, 1, 0",  // Barreja (incorrecte, mal pos, bé, incorrecte)
+        "7, 6, 5, 4; 0, 0, 0, 0"   // Tot malament
+    })
+
+    void testGetArrayPosicionsDataDriven(String intentStr, String resultatEsperatStr) {
+        // Fixem el codi secret a [1, 3, 2, 3] per aquest set de dades
+        codi.setCodi(Arrays.asList(1, 3, 2, 3));
+        verifica = new VerificaIntent(codi);
+
+        // Transformació de dades
+        List<Integer> intent = stringToList(intentStr);
+        List<Integer> resultatEsperat = stringToList(resultatEsperatStr);
+
+        // Execució
+        List<Integer> resultatObtingut = verifica.getArrayPosicions(intent);
+
+        // Verificació
+        assertEquals(resultatEsperat, resultatObtingut, 
+            "El càlcul de posicions ha fallat per l'entrada: " + intentStr);
+    }
 
 	@Test
 	void testVerificaIntent() {
@@ -168,6 +213,7 @@ class TestVerificaIntent {
 	}
 
 	
+   
 	
 	void testGetArrayPosicions() {
 		fail("Not yet implemented");
