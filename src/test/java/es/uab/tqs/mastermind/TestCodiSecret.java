@@ -6,6 +6,13 @@ import es.uab.tqs.mastermind.model.CodiSecret;
 import es.uab.tqs.mastermind.model.MockAleatori;
 import es.uab.tqs.mastermind.model.MockAleatoriCodiSecret;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
@@ -94,7 +101,43 @@ class TestCodiSecret {
 		} catch(Exception e) {}
 
 	}
+	
 
+	// convertidor string 1,2,3,4 a list per test automatització
+	private List<Integer> stringToList(String s) {
+        if (s == null || s.trim().isEmpty()) return new ArrayList<>();
+        return Stream.of(s.split(","))
+                     .map(String::trim)
+                     .map(Integer::parseInt)
+                     .collect(Collectors.toList());
+    }
+
+	@org.junit.jupiter.params.ParameterizedTest(name = "Intent: {0} -> Esperat: {1}")
+	@org.junit.jupiter.params.provider.CsvSource({
+		"1 2 2 1,true",   // Cas correcte (Coincideix amb el setup del mock)
+		"1 5 2 1,false",  // Un número diferent
+		"9 1 3 5,false",  // Tot diferent
+		"1 2 2 0,false",  // Últim dígit diferent
+		"1 2 2,false"     // Longitud incorrecta (si la lògica ho gestiona així)
+	})
+	void testComprovaCodiAutomatitzacio(String intentString, boolean esperat) {
+        // Assumim que el codi secret esperat per aquestes dades és [1, 2, 2, 1]
+        codi.setCodi(Arrays.asList(1, 2, 2, 1));
+
+        // passa el string del fitxer a un array
+		List<Integer> intent = new ArrayList<>();
+		if (intentString != null && !intentString.trim().isEmpty()) {
+			for (String num : intentString.trim().split("\\s+")) {
+				intent.add(Integer.parseInt(num));
+			}
+		}
+
+        // verifica el resultat amb el esperat del fitxer
+        try {
+            boolean resultat = codi.comprovaCodi(intent);
+            assertEquals(esperat, resultat);
+        } catch (Exception e) { }
+	}
 
     @Test
 	void testComprovaCodi() {
