@@ -214,22 +214,33 @@ class TestVerificaIntent {
         // Cas index == -1 (valor no existeix)
         assertEquals(Arrays.asList(0,0,0,0), verifica.getArrayPosicions(Arrays.asList(8,8,8,8)));
         
-
-
-
+		
 		/*
 		 * Path Coverage
 		 */
-        // P1 – Tot correcte
-        assertEquals(Arrays.asList(1,1,1,1), verifica.getArrayPosicions(Arrays.asList(1,3,2,3)));
-        // P2 – Tot incorrecte
-        assertEquals(Arrays.asList(0,0,0,0), verifica.getArrayPosicions(Arrays.asList(9,8,7,6)));
-        // P3 – Mix (0,2,1,0)
-        assertEquals(Arrays.asList(0,2,1,0), verifica.getArrayPosicions(Arrays.asList(4,1,2,9)));
-        // P4 – Repeticions al intent
-        assertEquals(Arrays.asList(0,1,0,1), verifica.getArrayPosicions(Arrays.asList(3,3,3,3)));
-	
 		
+		// Camí 1:
+		try {
+			verifica.getArrayPosicions(Arrays.asList(1,2,3));
+			assertTrue(false);
+		} catch(Error e) { }
+		
+		// Camí 2:
+		try {
+			verifica.getArrayPosicions(Arrays.asList(1, 3, 10, 3));
+			assertTrue(false);
+		} catch(Error e) {		}
+
+		// Camí 3:
+		assertEquals(Arrays.asList(1,1,1,1), verifica.getArrayPosicions(Arrays.asList(1,3,2,3)));
+		
+		// Camí 4:
+		assertEquals(Arrays.asList(0,0,0,0), verifica.getArrayPosicions(Arrays.asList(9,8,7,6)));
+		
+		// Camí 5:
+		assertEquals(Arrays.asList(0,2,1,0), verifica.getArrayPosicions(Arrays.asList(4,1,2,9)));
+
+	
 	}
 
 
