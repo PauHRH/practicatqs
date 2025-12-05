@@ -86,7 +86,12 @@ public class MockMasterMindVista extends MasterMindVista {
 
     public void getInstruccions()
     {
-        
+        // no ha de retornar res
     }
 
+    @Override
+    public boolean seguirJugant()
+    {
+        return false;
+    }
 }

@@ -26,42 +26,53 @@ public class MasterMindControlador {
     }
 
     public void iniciarPartida() {
-        view.mostrarBenvinguda();
-        int longitud = view.recullLongitud();
-        
-        view.demanarMaxIntents();
-        int maxIntents = view.recullMaxIntents();
 
-        view.getInstruccions();
+        boolean acabarPartides = false;
 
-        model.novaPartida(longitud, maxIntents);
-        historialIntents.clear(); 
-
-        boolean fin = false;
-        
         // loop simple
-        while (!fin) {
-            List<Integer> intent = view.recullIntent(longitud);
-            
-            // verifica si ja s'ha posat anteriorment
-            if (esIntentRepetit(intent)) {
-                // si és repetit, tornem a demanar codi (pasa al principi del bucle)
+        while(!acabarPartides)
+        {
+            view.mostrarBenvinguda();
+            int longitud = view.recullLongitud();
 
-                continue; 
+            view.demanarMaxIntents();
+            int maxIntents = view.recullMaxIntents();
+
+            view.getInstruccions();
+
+            model.novaPartida(longitud, maxIntents);
+            historialIntents.clear(); 
+
+            boolean fin = false;
+            while (!fin) {
+                List<Integer> intent = view.recullIntent(longitud);
+
+                // verifica si ja s'ha posat anteriorment
+                if (esIntentRepetit(intent)) {
+                    // si és repetit, tornem a demanar codi (pasa al principi del bucle)
+
+                    continue; 
+                }
+
+                historialIntents.add(intent);
+                boolean partidaAcabada = model.ferJugada(intent);
+                List<Integer> feedback = model.getArrayCorrectes(intent);
+                view.mostrarResultat(feedback);
+
+                // Path Coverage: Camins de victoria, derrota o continuació
+                if (model.getHaGuanyat()) {
+                    view.mostrarGuanyar();
+                    fin = true;
+                } else if (partidaAcabada || model.getIntentsFets() >= model.getIntentsMax()) {
+                    view.mostrarPerdre(model.getCodi().getCodi());
+                    fin = true;
+                }
             }
 
-            historialIntents.add(intent);
-            boolean partidaAcabada = model.ferJugada(intent);
-            List<Integer> feedback = model.getArrayCorrectes(intent);
-            view.mostrarResultat(feedback);
-
-            // Path Coverage: Camins de victoria, derrota o continuació
-            if (model.getHaGuanyat()) {
-                view.mostrarGuanyar();
-                fin = true;
-            } else if (partidaAcabada || model.getIntentsFets() >= model.getIntentsMax()) {
-                view.mostrarPerdre(model.getCodi().getCodi());
-                fin = true;
+            boolean seguirJugant = view.seguirJugant();
+            if (seguirJugant == false)
+            {
+                acabarPartides = true;
             }
         }
     }
