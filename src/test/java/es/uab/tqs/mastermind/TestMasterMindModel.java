@@ -1,15 +1,17 @@
 package es.uab.tqs.mastermind;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
+
+import org.junit.jupiter.api.Test;
+
 import es.uab.tqs.mastermind.model.Aleatori;
 import es.uab.tqs.mastermind.model.MasterMindModel;
 import es.uab.tqs.mastermind.model.MockAleatori;
 import es.uab.tqs.mastermind.model.MockAleatoriConfiguracio;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 class TestMasterMindModel {
 
@@ -120,6 +122,24 @@ class TestMasterMindModel {
 		m1.novaPartida(4, 6);
 		assertEquals(0, m1.getIntentsFets());
         assertFalse(m1.getHaGuanyat());
+
+		/*
+		Condition coverage testing:
+		amb els casos verificats anteriorment ja es compleix el condition testing, per exemple en aquests casos:
+		- longCodi < 2: 
+			· true: en particions equivalents per longCodi on valors fora de rang cap als negatius (< 2)
+			· false: en particions equivalents per longCodi on valors intermitjos (4)
+		- longCodi > 6:
+			· true: en particions equivalents per longCodi on valors fora de rang cap als positius (> 6)
+			· false: en particions equivalents per longCodi on valors intermitjos (4)
+		- intentsMax < 1:
+			· true: en particions equivalents per intentsMax on valors fora de rang cap als negatius (< 1)
+			· false: en particions equivalents per intentsMax on valors intermitjos (4)
+		- intentsMax > 10:
+			· true: en particions equivalents per intentsMax on valors fora de rang cap als positius (> 10)
+			· false: en particions equivalents per intentsMax on valors intermitjos (4)
+		*/
+		
 	}
 	
 	@Test
