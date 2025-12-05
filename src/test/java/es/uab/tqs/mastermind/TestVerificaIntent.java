@@ -79,7 +79,7 @@ class TestVerificaIntent {
     }
 
 	@Test
-	void testVerificaIntent() {
+	void testGetArrayPosicions() {
 		/*
 		 * Particio segons la validesa de l’entrada
 		 */
@@ -155,25 +155,40 @@ class TestVerificaIntent {
 		// repeticions que no corresponen al secret
 		assertEquals(Arrays.asList(0,0,0,0), verifica.getArrayPosicions(Arrays.asList(4,4,4,4)));
 		
+
 		/*
-		 * Decision i Condition Coverage del rang 
+			Decision Coverage i Condition Coverage del primer if
+			codiIntroduit.size() != codi.getLen()
+			· true: en particio segons la validesa de l’entrada on llista massa llarga
+			· false: en particions segons relació posicional entre codi secret i intent on tots els números correctes i a la posició correcta
+		*/
+
+
+		/*
+		 * Decision i Condition Coverage del rang del segon if
 		 * if (valor < 0 || valor > 9)
 		 */
-		// Cas valor < 0
+		// Cas valor < 0, if (true || false)
 		try {
             verifica.getArrayPosicions(Arrays.asList(-5,3,2,1));
             assertTrue(false);
         } catch (Error e) {}
-		// // Cas valor > 9
+		// Cas valor > 9, if (false || true)
         try {
             verifica.getArrayPosicions(Arrays.asList(1,3,12,1));
             assertTrue(false);
         } catch (Error e) {}
-        // Cas valor dins rang --> condició falsa, passa
+        // Cas valor dins rang --> condició falsa, if (false || false)
         assertEquals(Arrays.asList(0,0,0,0), verifica.getArrayPosicions(Arrays.asList(0,9,0,9)));
+
+		// Cas valor > 9 i valor < 0, if (true || true)
+		try {
+            verifica.getArrayPosicions(Arrays.asList(-1,3,12,1));
+            assertTrue(false);
+        } catch (Error e) {}
 		
         /*
-         * Decision Coverage del segon if
+         * Condition Coverage del tercer if
          * if (secret[i] == intent[i])
          */
         // Cas on entra al if (trobem un 1)
@@ -182,7 +197,7 @@ class TestVerificaIntent {
         assertEquals(Arrays.asList(0,0,0,0), verifica.getArrayPosicions(Arrays.asList(9,9,9,9)));
         
         /*
-         * Decision Coverage del tercer if
+         * Condition Coverage del quart if
          * if(verificador[i] == 0)
          */
         // Cas verificador[i] == 0
@@ -191,7 +206,7 @@ class TestVerificaIntent {
         assertEquals(Arrays.asList(1,0,0,0), verifica.getArrayPosicions(Arrays.asList(1,9,9,9)));
         
         /*
-         * Decision Coverage del quart if
+         * Condition coverage del cinquè if
          * if (index != -1)
          */
         // Cas index != -1 (valor correcte però mala posició)
@@ -199,6 +214,9 @@ class TestVerificaIntent {
         // Cas index == -1 (valor no existeix)
         assertEquals(Arrays.asList(0,0,0,0), verifica.getArrayPosicions(Arrays.asList(8,8,8,8)));
         
+
+
+
 		/*
 		 * Path Coverage
 		 */
@@ -210,12 +228,11 @@ class TestVerificaIntent {
         assertEquals(Arrays.asList(0,2,1,0), verifica.getArrayPosicions(Arrays.asList(4,1,2,9)));
         // P4 – Repeticions al intent
         assertEquals(Arrays.asList(0,1,0,1), verifica.getArrayPosicions(Arrays.asList(3,3,3,3)));
+	
+		
 	}
 
-	
+
    
-	
-	void testGetArrayPosicions() {
-		fail("Not yet implemented");
-	}
+
 }
