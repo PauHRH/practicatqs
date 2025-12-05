@@ -87,6 +87,26 @@ MasterMindModel model;
 
         assertTrue(vistaMock.haMostratGuanyar);
         assertEquals(2, model.getIntentsFets());
+
+        
+        /*
+            Statement coverage
+         */
+
+        // Intent repetit, no ha d'acceptar el segon valor (0,0,0,0) al ja haver
+        // estat posat abans.
+        vistaMock.setConfiguracioInicial(4, 4);
+        vistaMock.afegirIntentUsuari(Arrays.asList(0, 0, 0, 0)); 
+        vistaMock.afegirIntentUsuari(Arrays.asList(3, 2, 5, 1)); 
+        vistaMock.afegirIntentUsuari(Arrays.asList(0, 0, 0, 0)); 
+        vistaMock.afegirIntentUsuari(Arrays.asList(1, 2, 2, 1)); 
+        vistaMock.setIndexIntent(0);
+        controlador.iniciarPartida();
+
+        assertTrue(vistaMock.haMostratGuanyar);
+        assertEquals(3, model.getIntentsFets());
+
+
     }
 
     // S'utiliztza per el test de EsIntentRepetit
@@ -145,5 +165,13 @@ MasterMindModel model;
         //altres que existeixi
         List<Integer> intent6 = Arrays.asList(2,2,2,2);
         assertTrue(controlador.esIntentRepetit(intent6));
+
+       //cas 8: Passa per la condició que els arrays siguin diferents, torna a iterar bucle
+        List<Integer> intent7 = Arrays.asList(2,2,2);
+        controlador.esIntentRepetit(intent7);
+
+
+
+
     }
 }
