@@ -124,7 +124,7 @@ class TestMasterMindModel {
         assertFalse(m1.getHaGuanyat());
 
 		/*
-		Condition coverage testing:
+		Condition i decision coverage testing:
 		amb els casos verificats anteriorment ja es compleix el condition testing, per exemple en aquests casos:
 		- longCodi < 2: 
 			· true: en particions equivalents per longCodi on valors fora de rang cap als negatius (< 2)
