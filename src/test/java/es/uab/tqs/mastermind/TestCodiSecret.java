@@ -336,6 +336,7 @@ class TestCodiSecret {
 		// En particions equivalents per longitud 4 (Valor entremig) on codiIntroduit es exactament igual a codi es comprova que codiIntroduit.size() < 2 i codiIntroduit.size() > 6 és false.
 		// En particions equivalents per longitud 1 (Valor límit) codiIntroduit es exactament igual a codi es comprova que codiIntroduit.size() < 2 és true.
 		// En particions equivalents per longitud 6 (Valor frontera) on codiIntroduit es exactament igual a codi es comprova que codi.size() != codiIntroduit.size() és false.
-
+		// El decision coverage ja es compleix quan alguna de les condicions és true (al ser un or) i serà false quan el valor és 4 
+		// (és a dir, per exemple, en el cas: "En particions equivalents per longitud 4 (Valor entremig) on codiIntroduit es exactament igual a codi").
 	}
 }
