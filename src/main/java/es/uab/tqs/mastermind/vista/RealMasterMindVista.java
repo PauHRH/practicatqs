@@ -18,6 +18,7 @@ public class RealMasterMindVista extends MasterMindVista {
         {
             if (scanner.hasNextInt()) {
                 longitud = scanner.nextInt();
+                scanner.nextLine();
             }
             if (longitud >= 2 && longitud <= 6)
             {
@@ -36,6 +37,7 @@ public class RealMasterMindVista extends MasterMindVista {
         {
             if (scanner.hasNextInt()) {
                 maxIntents = scanner.nextInt();
+                scanner.nextLine();
             }
             if (maxIntents >= 1 && maxIntents <= 10)
             {                
@@ -44,8 +46,6 @@ public class RealMasterMindVista extends MasterMindVista {
         }
         return maxIntents;
     }
-
-
 
     @Override
     public List<Integer> recullIntent(int longitudEsperada) {
@@ -123,5 +123,30 @@ public class RealMasterMindVista extends MasterMindVista {
     {
         System.out.println("INSTRUCCIONS DEL JOC:");
         System.out.println("Has d'introduir els diversos valors separats en espais, és a dir, si vols introduir el valor 1234 l'has d'introduir d'aquesta manera: 1 2 3 4");
+    }
+
+    @Override
+    public boolean seguirJugant()
+    {
+        System.out.println("Vols jugar un altre partida? (S/N)");
+        while (true) {
+            String linia = scanner.nextLine();
+            if (linia == null) {
+                return false;
+            }
+            linia = linia.trim();
+            if (linia.isEmpty()) {
+                System.out.println("Introdueix 'S' per continuar o 'N' per sortir:");
+                continue;
+            }
+            char primera = Character.toUpperCase(linia.charAt(0));
+            if (primera == 'S') {
+                return true;
+            } else if (primera == 'N') {
+                return false;
+            } else {
+                System.out.println("Resposta invàlida. Introdueix 'S' per continuar o 'N' per sortir:");
+            }
+        }
     }
 }
