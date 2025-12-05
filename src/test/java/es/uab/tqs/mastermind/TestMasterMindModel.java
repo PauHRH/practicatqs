@@ -218,6 +218,44 @@ class TestMasterMindModel {
 			m10.ferJugada(Arrays.asList(1,2,2,6,7));
 			assertTrue(false);
 		} catch(Exception e) {}	
+
+		/*
+			Path Coverage Testing
+		*/
+
+		//Camí 1: 
+		MasterMindModel m11 = new MasterMindModel(4,5,alt);
+		try {
+			m11.ferJugada(Arrays.asList(1,2,3));
+			assertTrue(false);
+		} catch(Exception e) {}
+
+		//Camí 2: 
+		//Intenta guanyar amb valor SUPERIORS de INTENTS fets a MAX
+		MasterMindModel m12 = new MasterMindModel(4,5,alt);
+		m12.setIntentsFets(7);
+		try {
+			m12.ferJugada(Arrays.asList(1,2,2,1));
+			assertTrue(false);
+		} catch (Exception e) {}
+
+		//Camí 3:
+		MasterMindModel m13 = new MasterMindModel(4,5,alt);
+		assertTrue(m13.ferJugada(Arrays.asList(1,2,2,1)));
+		assertEquals(1, m13.getIntentsFets());
+
+		// Camí 4:
+		MasterMindModel m14 = new MasterMindModel(4,5,alt);
+		m14.setIntentsFets(4);
+		assertFalse(m14.ferJugada(Arrays.asList(1,2,1,1)));
+
+		// Camí 5:
+		MasterMindModel m15 = new MasterMindModel(4,6,alt);
+		m15.setIntentsFets(4);
+		assertFalse(m15.ferJugada(Arrays.asList(1,2,1,1)));
+
+
+
 	}
 
 	@Test
