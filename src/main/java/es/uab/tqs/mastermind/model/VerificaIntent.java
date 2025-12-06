@@ -22,26 +22,25 @@ public class VerificaIntent {
 	        verificador.add(0);
 	    }
 
-	    // copia del codigo secreto para marcar los elementos ya contados
 	    List<Integer> codiCopia = new ArrayList<>(codi.getCodi());
 
-	    // primero marcamos los correctos (posicion y numero)
+	    // primer marquem els correctes (posicio i numero)
 	    for (int i = 0; i < codi.getLen(); i++) {
 			if(codiIntroduit.get(i) < 0 || codiIntroduit.get(i) > 9)
 				throw new Error("Error, valor fuera del límite");
 	        if (codi.getCodi().get(i).equals(codiIntroduit.get(i))) {
 	            verificador.set(i, 1);          // correcto
-	            codiCopia.set(i, -1);           // marcar como usado
+	            codiCopia.set(i, -1);           // marcar com usat
 	        }
 	    }
 
-	    // marcamos los numeros correctos pero en mala posicion
+	    // marquem els numeros correctes pero en mala posicio
 		for (int i = 0; i < codi.getLen(); i++) {
-	        if (verificador.get(i) == 0) {      // solo los que aun son 0
+	        if (verificador.get(i) == 0) {      // només els que encara son 0
 	            int index = codiCopia.indexOf(codiIntroduit.get(i));
 	            if (index != -1) {
-	                verificador.set(i, 2);      // numero correcto, mala posicion
-	                codiCopia.set(index, -1);   // marcar como usado
+	                verificador.set(i, 2);      // numero correcte, mala posicio
+	                codiCopia.set(index, -1);   // marcar com usat
 	            }
 	        }
 	    }

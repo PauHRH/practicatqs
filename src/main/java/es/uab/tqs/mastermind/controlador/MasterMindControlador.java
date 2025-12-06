@@ -29,7 +29,6 @@ public class MasterMindControlador {
 
         boolean acabarPartides = false;
 
-        // loop simple
         while(!acabarPartides)
         {
             view.mostrarBenvinguda();
@@ -58,7 +57,6 @@ public class MasterMindControlador {
                 List<Integer> feedback = model.getArrayCorrectes(intent);
                 view.mostrarResultat(feedback);
 
-                // Path Coverage: Camins de victoria, derrota o continuació
                 if (model.getHaGuanyat()) {
                     view.mostrarGuanyar();
                     fin = true;
@@ -77,20 +75,14 @@ public class MasterMindControlador {
     }
 
     public boolean esIntentRepetit(List<Integer> nouIntent) {
-        // recorrem tot l'historial d'intents fets
         for (List<Integer> intentAntic : historialIntents) {
-            
-            // Assumim que són iguals fins que demostrem el contrari
             boolean esIdentic = true;
 
-            // Si tenen mides diferents, segur que no són el mateix intent
             if (intentAntic.size() != nouIntent.size()) {
                 continue; 
             }
 
-            // recorrem número a número (per índex)
             for (int i = 0; i < nouIntent.size(); i++) {
-                // Comparem el número de la posició 'i' de l'intent antic amb el nou
                 if (!intentAntic.get(i).equals(nouIntent.get(i))) {
                     esIdentic = false;
                     break; // Si un número ja no coincideix, sortim d'aquest bucle intern
