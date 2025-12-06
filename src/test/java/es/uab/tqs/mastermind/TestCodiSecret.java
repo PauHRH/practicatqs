@@ -3,7 +3,6 @@ import org.junit.jupiter.api.Test;
 
 import es.uab.tqs.mastermind.model.Aleatori;
 import es.uab.tqs.mastermind.model.CodiSecret;
-import es.uab.tqs.mastermind.model.MockAleatori;
 import es.uab.tqs.mastermind.model.MockAleatoriCodiSecret;
 
 import org.junit.jupiter.params.ParameterizedTest;
@@ -27,7 +26,7 @@ class TestCodiSecret {
 	@BeforeEach
 	void setUp()
 	{
-		alt = new MockAleatori();
+		alt = new MockAleatoriCodiSecret();
 		codi = new CodiSecret(alt, 4);
 		codi.generarCodi(); // Genera [1, 2, 2, 1]
 	}

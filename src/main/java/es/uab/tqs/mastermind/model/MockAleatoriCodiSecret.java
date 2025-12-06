@@ -9,6 +9,9 @@ public class MockAleatoriCodiSecret implements Aleatori {
 	
 	
 
+	public MockAleatoriCodiSecret()
+	{	}
+
 	public MockAleatoriCodiSecret(List<Integer> codi)
 	{
 		this.codi = codi;
@@ -27,6 +30,10 @@ public class MockAleatoriCodiSecret implements Aleatori {
 		else if(longitud == 3)
 		{
 			return Arrays.asList(1,2,3);
+		}
+		else if(longitud == 4)
+		{
+			return Arrays.asList(1,2,2,1);
 		}
 		else if(longitud == 5)
 		{

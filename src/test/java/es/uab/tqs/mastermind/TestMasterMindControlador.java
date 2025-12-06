@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import es.uab.tqs.mastermind.model.MasterMindModel;
-import es.uab.tqs.mastermind.model.MockAleatori;
+import es.uab.tqs.mastermind.model.MockAleatoriCodiSecret;
 import es.uab.tqs.mastermind.vista.MockMasterMindVista;
 import es.uab.tqs.mastermind.controlador.MasterMindControlador;
 
@@ -18,11 +18,11 @@ public class TestMasterMindControlador {
 MasterMindModel model;
     MockMasterMindVista vistaMock; // Vista mock
     MasterMindControlador controlador;
-    MockAleatori aleatoriMock;
+    MockAleatoriCodiSecret aleatoriMock;
 
     @BeforeEach
 	void setUp() {
-        aleatoriMock = new MockAleatori(); // Codi fixe: 1,2,2,1
+        aleatoriMock = new MockAleatoriCodiSecret(); // Codi fixe: 1,2,2,1
         model = new MasterMindModel(aleatoriMock);
         vistaMock = new MockMasterMindVista();
         controlador = new MasterMindControlador(model, vistaMock);
@@ -112,7 +112,7 @@ MasterMindModel model;
     // S'utiliztza per el test de EsIntentRepetit
     private void inserirHistorial(List<List<Integer>> historialSimulat) {
         if (controlador == null) {
-             controlador = new MasterMindControlador(new MasterMindModel(new MockAleatori()), new MockMasterMindVista());
+             controlador = new MasterMindControlador(new MasterMindModel(new MockAleatoriCodiSecret()), new MockMasterMindVista());
         }
         if (vistaMock == null) {
               vistaMock = new MockMasterMindVista();
