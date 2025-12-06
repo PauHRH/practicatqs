@@ -107,9 +107,134 @@ MasterMindModel model;
         assertEquals(3, model.getIntentsFets());
 
 
+        /*
+            Loop testing aniuat
+            per loops de la funció
+
+            Loop testing bucle intern
+        */
+
+        // Cas 1: 1 passada pel loop intern (Guanya a la primera)
+        vistaMock = new MockMasterMindVista();
+        vistaMock.setConfiguracioInicial(4, 5); 
+        vistaMock.setSeguirJugant(false);
+        
+        vistaMock.afegirIntentUsuari(Arrays.asList(1, 2, 2, 1));
+        
+        controlador = new MasterMindControlador(model, vistaMock);
+        controlador.iniciarPartida();
+        
+        assertTrue(vistaMock.haMostratGuanyar);
+        assertEquals(1, model.getIntentsFets()); // 1 iteració
+
+
+        // Cas 2: 2 passades pel loop intern (Falla 1a, Guanya 2a)
+        vistaMock = new MockMasterMindVista();
+        vistaMock.setConfiguracioInicial(4, 5);
+        vistaMock.setSeguirJugant(false);
+        
+        vistaMock.afegirIntentUsuari(Arrays.asList(0, 0, 0, 0));
+        vistaMock.afegirIntentUsuari(Arrays.asList(1, 2, 2, 1));
+        
+        controlador = new MasterMindControlador(model, vistaMock);
+        controlador.iniciarPartida();
+        
+        assertTrue(vistaMock.haMostratGuanyar);
+        assertEquals(2, model.getIntentsFets());
+
+
+        // Cas 3: m passades pel loop intern (Ex: 3 intents de 5)
+        vistaMock = new MockMasterMindVista();
+        vistaMock.setConfiguracioInicial(4, 5);
+        vistaMock.setSeguirJugant(false);
+        
+        vistaMock.afegirIntentUsuari(Arrays.asList(0, 0, 0, 0));
+        vistaMock.afegirIntentUsuari(Arrays.asList(3, 4, 5, 6));
+        vistaMock.afegirIntentUsuari(Arrays.asList(1, 2, 2, 1));
+        
+        controlador = new MasterMindControlador(model, vistaMock);
+        controlador.iniciarPartida();
+        
+        assertEquals(3, model.getIntentsFets());
+
+
+        // Cas 4: n passades (màxim) pel loop intern (Esgota intents)
+        vistaMock = new MockMasterMindVista();
+        vistaMock.setConfiguracioInicial(4, 4); 
+        vistaMock.setSeguirJugant(false);
+        
+        vistaMock.afegirIntentUsuari(Arrays.asList(1, 2, 3, 4));
+        vistaMock.afegirIntentUsuari(Arrays.asList(0, 0, 0, 0));
+        vistaMock.afegirIntentUsuari(Arrays.asList(3, 4, 5, 6));
+        vistaMock.afegirIntentUsuari(Arrays.asList(1, 3, 2, 1));
+        
+        
+        controlador = new MasterMindControlador(model, vistaMock);
+        controlador.iniciarPartida();
+        
+        assertTrue(vistaMock.haMostratPerdre); // Confirmem que ha sortit per derrota
+        assertEquals(4, model.getIntentsFets());
+
+        /*
+            Loop testing bucle extern
+        */
+
+        // Cas 1: 1 passada pel loop extern (Jugar una sola partida)
+        vistaMock = new MockMasterMindVista();
+        vistaMock.setConfiguracioInicial(4, 5);
+        vistaMock.setSeguirJugant(false);
+        vistaMock.afegirIntentUsuari(Arrays.asList(0,0,0,0));
+        vistaMock.afegirIntentUsuari(Arrays.asList(1,2,2,1));
+        
+        controlador = new MasterMindControlador(model, vistaMock);
+        controlador.iniciarPartida();
+
+        // Cas 2: 2 passades pel loop extern (Jugar dues partides)
+        vistaMock = new MockMasterMindVista();
+        
+        // Config Partida 1
+        vistaMock.setConfiguracioInicial(4, 5);
+        vistaMock.afegirIntentUsuari(Arrays.asList(0,0,0,0)); 
+        vistaMock.afegirIntentUsuari(Arrays.asList(1,2,2,1));
+        
+        vistaMock.setSeguirJugant(true); 
+        
+        // Config Partida 2
+        vistaMock.afegirConfiguracioExtra(4, 5);
+        vistaMock.afegirIntentUsuari(Arrays.asList(0,0,0,0));
+        vistaMock.afegirIntentUsuari(Arrays.asList(1,2,2,1));
+        
+        vistaMock.afegirRespostaSeguirJugant(false);
+
+        controlador = new MasterMindControlador(model, vistaMock);
+        controlador.iniciarPartida();
+        
+        
+        
+        // Cas 3: m passades pel loop extern (Jugar 3 partides)
+        vistaMock = new MockMasterMindVista();
+        // Partida 1
+        vistaMock.setConfiguracioInicial(4, 5);
+        vistaMock.afegirIntentUsuari(Arrays.asList(1,2,2,1));
+        vistaMock.setSeguirJugant(true);
+        
+        // Partida 2
+        vistaMock.afegirConfiguracioExtra(4, 5);
+        vistaMock.afegirIntentUsuari(Arrays.asList(1,2,2,1));
+        vistaMock.afegirRespostaSeguirJugant(true);
+        
+        // Partida 3
+        vistaMock.afegirConfiguracioExtra(4, 5);
+        vistaMock.afegirIntentUsuari(Arrays.asList(1,2,2,1));
+        vistaMock.afegirRespostaSeguirJugant(false);
+
+        controlador = new MasterMindControlador(model, vistaMock);
+        controlador.iniciarPartida();
+
+
     }
 
-    // S'utiliztza per el test de EsIntentRepetit
+    // S'utilitza per el test de EsIntentRepetit
     private void inserirHistorial(List<List<Integer>> historialSimulat) {
         if (controlador == null) {
              controlador = new MasterMindControlador(new MasterMindModel(new MockAleatoriCodiSecret()), new MockMasterMindVista());
