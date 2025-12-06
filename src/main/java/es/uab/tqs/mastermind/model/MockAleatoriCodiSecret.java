@@ -7,7 +7,6 @@ import java.util.List;
 public class MockAleatoriCodiSecret implements Aleatori {
     private static List<Integer> codi = new ArrayList<>();
 	
-	
 
 	public MockAleatoriCodiSecret()
 	{	}
