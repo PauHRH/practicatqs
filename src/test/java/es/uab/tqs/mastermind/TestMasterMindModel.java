@@ -355,6 +355,35 @@ class TestMasterMindModel {
 		assertEquals(Arrays.asList(1,1,1,1,1,1), mLoop6.getArrayCorrectes(intent6)); // Loop s'executa 6 cops
 		
 	}
-		
-
+	
+	// Funció per evaluar el pairwise
+	@Test
+	void testEvaluarPartida() {
+		MasterMindModel model = new MasterMindModel(new MockAleatoriCodiSecret());
+        assertEquals("Derrota", model.evaluarPartida(-1, 0, 1));
+		assertEquals("Derrota", model.evaluarPartida(-1, 5, 2));
+		assertEquals("Derrota", model.evaluarPartida(-1, 10, 4));
+		assertEquals("Derrota", model.evaluarPartida(-1, 11, 6));
+		assertEquals("Derrota", model.evaluarPartida(-1, 1, 7));
+		assertEquals("Derrota", model.evaluarPartida(0, 5, 4));
+		assertEquals("Derrota", model.evaluarPartida(0, 10, 6));
+		assertEquals("Derrota", model.evaluarPartida(0, 11, 7));
+		assertEquals("Derrota", model.evaluarPartida(0, 1, 1));
+		assertEquals("Derrota", model.evaluarPartida(0, 0, 2));
+		assertEquals("Derrota", model.evaluarPartida(1, 10, 7));
+		assertEquals("Derrota", model.evaluarPartida(1, 11, 1));
+		assertEquals("Victoria", model.evaluarPartida(1, 1, 2));
+		assertEquals("Derrota", model.evaluarPartida(1, 0, 4));
+		assertEquals("Victoria", model.evaluarPartida(1, 5, 6));
+		assertEquals("Derrota", model.evaluarPartida(5, 11, 2));
+		assertEquals("Derrota", model.evaluarPartida(5, 1, 4));
+		assertEquals("Derrota", model.evaluarPartida(5, 0, 6));
+		assertEquals("Derrota", model.evaluarPartida(5, 5, 7));
+		assertEquals("Derrota", model.evaluarPartida(5, 10, 1));
+		assertEquals("Derrota", model.evaluarPartida(6, 1, 6));
+		assertEquals("Derrota", model.evaluarPartida(6, 0, 7));
+		assertEquals("Derrota", model.evaluarPartida(6, 5, 1));
+		assertEquals("Victoria", model.evaluarPartida(6, 10, 2));
+		assertEquals("Derrota", model.evaluarPartida(6, 11, 4));
+	}
 }
