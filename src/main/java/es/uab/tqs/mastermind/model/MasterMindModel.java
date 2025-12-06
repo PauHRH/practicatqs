@@ -116,5 +116,28 @@ public class MasterMindModel {
 		return vi.getArrayPosicions(codiProposat);
 	}
 	
-	
+	public String evaluarPartida(int intentsFets, int intentsMax, int longitud) 
+	{
+		if (longitud < 2 || longitud > 6)
+		{
+			return "Derrota";
+		}
+
+		if (intentsMax < 1 || intentsMax > 10)
+		{
+			return "Derrota";
+		}
+
+		if (intentsFets <= 0)
+		{
+			return "Derrota";
+		}
+
+		if (intentsFets <= intentsMax)
+		{
+			return "Victoria";
+		}
+
+		return "Derrota";
+	}
 }
