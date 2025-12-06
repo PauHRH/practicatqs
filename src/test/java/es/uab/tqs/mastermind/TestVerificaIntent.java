@@ -240,6 +240,64 @@ class TestVerificaIntent {
 		// Camí 5:
 		assertEquals(Arrays.asList(0,2,1,0), verifica.getArrayPosicions(Arrays.asList(4,1,2,9)));
 
+		/*
+			Loop testing simple
+			en loop: for (int i = 0; i < codi.getLen(); i++)
+		*/
+
+		MockAleatoriVerificaIntent aleatori = new MockAleatoriVerificaIntent();
+        CodiSecret codiSecret = new CodiSecret(aleatori, 4);
+        codiSecret.generarCodi();
+		// CAS 1: 0 Iteracions (Llista buida)
+        codiSecret.setCodi(new ArrayList<>()); 
+        VerificaIntent vi0 = new VerificaIntent(codiSecret);
+        List<Integer> intent0 = new ArrayList<>();
+        
+        List<Integer> resultat0 = vi0.getArrayPosicions(intent0);
+        assertEquals(0, resultat0.size());
+
+
+        // CAS 2: 1 Iteració (Longitud 1)
+        codiSecret.setCodi(Arrays.asList(1));
+        VerificaIntent vi1 = new VerificaIntent(codiSecret);
+        
+        // Cas encertat
+        assertEquals(Arrays.asList(1), vi1.getArrayPosicions(Arrays.asList(1)));
+        // Cas fallat
+        assertEquals(Arrays.asList(0), vi1.getArrayPosicions(Arrays.asList(2)));
+
+
+        //CAS 3: 2 Iteracions (Mínim lògic del joc)
+        codiSecret.setCodi(Arrays.asList(1, 2));
+        VerificaIntent vi2 = new VerificaIntent(codiSecret);
+
+        // Tot correcte
+        assertEquals(Arrays.asList(1, 1), vi2.getArrayPosicions(Arrays.asList(1, 2)));
+        // Tot malament
+        assertEquals(Arrays.asList(0, 0), vi2.getArrayPosicions(Arrays.asList(3, 4)));
+        // 1 correcte, 1 posició incorrecta (invertits)
+        assertEquals(Arrays.asList(2, 2), vi2.getArrayPosicions(Arrays.asList(2, 1)));
+
+
+        // CAS 4: 4 Iteracions
+        codiSecret.setCodi(Arrays.asList(1, 3, 2, 3));
+        VerificaIntent vi4 = new VerificaIntent(codiSecret);
+
+        // Encert total
+        assertEquals(Arrays.asList(1,1,1,1), vi4.getArrayPosicions(Arrays.asList(1,3,2,3)));
+        // Parcial
+        assertEquals(Arrays.asList(1,0,2,0), vi4.getArrayPosicions(Arrays.asList(1,5,3,4)));
+
+
+        // CAS 5: 6 Iteracions (Màxim lògic del joc)
+        codiSecret.setCodi(Arrays.asList(1, 2, 3, 4, 5, 6));
+        VerificaIntent vi6 = new VerificaIntent(codiSecret);
+
+        List<Integer> intent6 = Arrays.asList(1, 2, 3, 4, 5, 6);
+        assertEquals(Arrays.asList(1,1,1,1,1,1), vi6.getArrayPosicions(intent6));
+
+        List<Integer> intent6_barreja = Arrays.asList(6, 5, 4, 3, 2, 1);
+        assertEquals(Arrays.asList(2,2,2,2,2,2), vi6.getArrayPosicions(intent6_barreja));
 	
 	}
 
