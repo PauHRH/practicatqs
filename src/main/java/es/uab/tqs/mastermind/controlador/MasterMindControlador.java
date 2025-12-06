@@ -50,7 +50,6 @@ public class MasterMindControlador {
                 // verifica si ja s'ha posat anteriorment
                 if (esIntentRepetit(intent)) {
                     // si és repetit, tornem a demanar codi (pasa al principi del bucle)
-
                     continue; 
                 }
 

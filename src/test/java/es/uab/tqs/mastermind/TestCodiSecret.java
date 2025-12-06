@@ -3,7 +3,6 @@ import org.junit.jupiter.api.Test;
 
 import es.uab.tqs.mastermind.model.Aleatori;
 import es.uab.tqs.mastermind.model.CodiSecret;
-import es.uab.tqs.mastermind.model.MockAleatori;
 import es.uab.tqs.mastermind.model.MockAleatoriCodiSecret;
 
 import org.junit.jupiter.params.ParameterizedTest;
@@ -27,7 +26,7 @@ class TestCodiSecret {
 	@BeforeEach
 	void setUp()
 	{
-		alt = new MockAleatori();
+		alt = new MockAleatoriCodiSecret();
 		codi = new CodiSecret(alt, 4);
 		codi.generarCodi(); // Genera [1, 2, 2, 1]
 	}
@@ -327,5 +326,16 @@ class TestCodiSecret {
 			assertFalse(codi.comprovaCodi(Arrays.asList(1, 2, 3, 4, 5, 6, 7)));
 			assertTrue(false);
 		} catch (Exception e) {}
+
+		// la resta de casos ja es compleixen amb el tests executats previament.
+		// Dona 100% al condition testing. Els casos són els següents:
+		// En particions equivalents per longitud 1 (Valor límit), valor límit qualsevol cas, es comprova que codi.size() < 2 és true.
+		// En particions equivalents per longitud 7 (Valor límit), valor límit qualsevol cas, es comprova que codi.size() > 6 és true.
+		// En particions equivalents per longitud entre 2 i 6 es comprova que codi.size() < 2 i codi.size() > 6 és false.
+		// En particions equivalents per longitud 4 (Valor entremig) on codiIntroduit es exactament igual a codi es comprova que codiIntroduit.size() < 2 i codiIntroduit.size() > 6 és false.
+		// En particions equivalents per longitud 1 (Valor límit) codiIntroduit es exactament igual a codi es comprova que codiIntroduit.size() < 2 és true.
+		// En particions equivalents per longitud 6 (Valor frontera) on codiIntroduit es exactament igual a codi es comprova que codi.size() != codiIntroduit.size() és false.
+		// El decision coverage ja es compleix quan alguna de les condicions és true (al ser un or) i serà false quan el valor és 4 
+		// (és a dir, per exemple, en el cas: "En particions equivalents per longitud 4 (Valor entremig) on codiIntroduit es exactament igual a codi").
 	}
 }

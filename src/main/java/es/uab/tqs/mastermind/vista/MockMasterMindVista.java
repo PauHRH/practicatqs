@@ -10,10 +10,17 @@ public class MockMasterMindVista extends MasterMindVista {
     private int maxIntentsSimulats = 5;
     private List<List<Integer>> intentsUsuari = new ArrayList<>();
     private int indexIntent = 0;
+    private boolean seguirJugant = false;
 
     public boolean haMostratGuanyar = false;
     public boolean haMostratPerdre = false;
     public List<List<Integer>> resultatsMostrats = new ArrayList<>();
+
+    // Per loop testing
+    private List<int[]> configuracions = new ArrayList<>(); // Guarda {longitud, maxIntents}
+    private List<Boolean> respostesSeguirJugant = new ArrayList<>();
+    private int indexConfig = 0;
+    private int indexSeguir = 0;
 
     public MockMasterMindVista()
     {
@@ -33,6 +40,10 @@ public class MockMasterMindVista extends MasterMindVista {
 
     // metodes per tests
     public void setConfiguracioInicial(int longitud, int maxIntents) {
+        this.configuracions.clear();
+        this.configuracions.add(new int[]{longitud, maxIntents});
+        this.indexConfig = 0;
+
         this.longitudSimulada = longitud;
         this.maxIntentsSimulats = maxIntents;
         // reset d'estat per a noves partides
@@ -81,17 +92,43 @@ public class MockMasterMindVista extends MasterMindVista {
     @Override
     public int recullMaxIntents()
     {
-        return this.maxIntentsSimulats;
+        if (indexConfig < configuracions.size()) {
+            int val = configuracions.get(indexConfig)[1];
+            indexConfig++;
+            return val;
+        }
+        return 5;
     }
 
+    @Override
     public void getInstruccions()
     {
         // no ha de retornar res
     }
 
+    public void setSeguirJugant(boolean seguirJugant)
+    {
+        this.respostesSeguirJugant.clear();
+        this.respostesSeguirJugant.add(seguirJugant);
+    }
+
     @Override
     public boolean seguirJugant()
     {
+        if (indexSeguir < respostesSeguirJugant.size()) {
+            return respostesSeguirJugant.get(indexSeguir++);
+        }
         return false;
+    }
+
+    /*
+        Per loop testing
+    */
+    public void afegirConfiguracioExtra(int longitud, int maxIntents) {
+        this.configuracions.add(new int[]{longitud, maxIntents});
+    }
+
+    public void afegirRespostaSeguirJugant(boolean seguir) {
+        this.respostesSeguirJugant.add(seguir);
     }
 }

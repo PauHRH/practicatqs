@@ -1,21 +1,24 @@
 package es.uab.tqs.mastermind;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
 import es.uab.tqs.mastermind.model.Aleatori;
 import es.uab.tqs.mastermind.model.MasterMindModel;
-import es.uab.tqs.mastermind.model.MockAleatori;
+import es.uab.tqs.mastermind.model.MockAleatoriCodiSecret;
 import es.uab.tqs.mastermind.model.MockAleatoriConfiguracio;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 class TestMasterMindModel {
 
     @Test
 	void testNovaPartida() {
-		Aleatori alt = new MockAleatori();
+		Aleatori alt = new MockAleatoriCodiSecret();
 		MasterMindModel m1 = new MasterMindModel(2,4,alt);
 
 		/*
@@ -120,11 +123,29 @@ class TestMasterMindModel {
 		m1.novaPartida(4, 6);
 		assertEquals(0, m1.getIntentsFets());
         assertFalse(m1.getHaGuanyat());
+
+		/*
+		Condition i decision coverage testing:
+		amb els casos verificats anteriorment ja es compleix el condition testing, per exemple en aquests casos:
+		- longCodi < 2: 
+			· true: en particions equivalents per longCodi on valors fora de rang cap als negatius (< 2)
+			· false: en particions equivalents per longCodi on valors intermitjos (4)
+		- longCodi > 6:
+			· true: en particions equivalents per longCodi on valors fora de rang cap als positius (> 6)
+			· false: en particions equivalents per longCodi on valors intermitjos (4)
+		- intentsMax < 1:
+			· true: en particions equivalents per intentsMax on valors fora de rang cap als negatius (< 1)
+			· false: en particions equivalents per intentsMax on valors intermitjos (4)
+		- intentsMax > 10:
+			· true: en particions equivalents per intentsMax on valors fora de rang cap als positius (> 10)
+			· false: en particions equivalents per intentsMax on valors intermitjos (4)
+		*/
+		
 	}
 	
 	@Test
 	void testFerJugada() {
-		Aleatori alt = new MockAleatori();
+		Aleatori alt = new MockAleatoriCodiSecret();
 		MasterMindModel m1 = new MasterMindModel(4,5,alt);
 		
 		/*
@@ -198,6 +219,44 @@ class TestMasterMindModel {
 			m10.ferJugada(Arrays.asList(1,2,2,6,7));
 			assertTrue(false);
 		} catch(Exception e) {}	
+
+		/*
+			Path Coverage Testing
+		*/
+
+		//Camí 1: 
+		MasterMindModel m11 = new MasterMindModel(4,5,alt);
+		try {
+			m11.ferJugada(Arrays.asList(1,2,3));
+			assertTrue(false);
+		} catch(Exception e) {}
+
+		//Camí 2: 
+		//Intenta guanyar amb valor SUPERIORS de INTENTS fets a MAX
+		MasterMindModel m12 = new MasterMindModel(4,5,alt);
+		m12.setIntentsFets(7);
+		try {
+			m12.ferJugada(Arrays.asList(1,2,2,1));
+			assertTrue(false);
+		} catch (Exception e) {}
+
+		//Camí 3:
+		MasterMindModel m13 = new MasterMindModel(4,5,alt);
+		assertTrue(m13.ferJugada(Arrays.asList(1,2,2,1)));
+		assertEquals(1, m13.getIntentsFets());
+
+		// Camí 4:
+		MasterMindModel m14 = new MasterMindModel(4,5,alt);
+		m14.setIntentsFets(4);
+		assertTrue(m14.ferJugada(Arrays.asList(1,2,1,1)));
+
+		// Camí 5:
+		MasterMindModel m15 = new MasterMindModel(4,6,alt);
+		m15.setIntentsFets(4);
+		assertFalse(m15.ferJugada(Arrays.asList(1,2,1,1)));
+
+
+
 	}
 
 	@Test
@@ -265,6 +324,37 @@ class TestMasterMindModel {
 			m1.getArrayCorrectes(Arrays.asList(1,1,1,1,1));
 			assertTrue(false);
 		} catch (Exception e) {}
+
+	
+		/*
+		 	Loop Testing (Simple)
+			per loop for (int c : codiProposat)
+		*/
+		
+		// Cas 0 iteracions (Llista buida): El loop no s'executa, però salta excepció per mida.
+		try {
+			m1.getArrayCorrectes(Arrays.asList());
+			assertTrue(false);
+		} catch (Exception e) {}
+
+		// Cas mínim iteracions valid (2 iteracions):
+		MasterMindModel mLoop2 = new MasterMindModel(2, 5, new MockAleatoriCodiSecret()); 
+		// MockAleatori per long 2 torna [1,3]
+		List<Integer> intent2 = Arrays.asList(1,3);
+		assertEquals(Arrays.asList(1,1), mLoop2.getArrayCorrectes(intent2)); // Loop s'executa 2 cops
+		
+		// Cas mig iteracions (4 iteracions):
+		MasterMindModel mLoop4 = new MasterMindModel(4, 5, new MockAleatoriCodiSecret()); 
+		List<Integer> intent4 = Arrays.asList(1,2,2,1);
+		assertEquals(Arrays.asList(1,1,1,1), mLoop4.getArrayCorrectes(intent4)); // Loop s'executa 4 cop
+
+		// Cas màxim iteracions (6 iteracions, n-1):
+		MasterMindModel mLoop6 = new MasterMindModel(6, 5, new MockAleatoriCodiSecret());
+		// MockAleatoriCodiSecret per long 6 torna [1,2,3,4,5,4]
+		List<Integer> intent6 = Arrays.asList(1,2,3,4,5,4);
+		assertEquals(Arrays.asList(1,1,1,1,1,1), mLoop6.getArrayCorrectes(intent6)); // Loop s'executa 6 cops
+		
 	}
+		
 
 }
